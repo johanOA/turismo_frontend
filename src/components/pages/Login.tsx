@@ -4,8 +4,7 @@ import "./Login.css"; // Archivo CSS para el estilo específico de Login
 import { useState } from "react";
 import { useAuth } from "../../Auth/AuthProvider";
 import { Navigate } from "react-router-dom";
-import bgImage from "../../assets/HeroVector.png"
-import { Image } from "../atoms/Image"
+
 
 export default function Login() {
 
