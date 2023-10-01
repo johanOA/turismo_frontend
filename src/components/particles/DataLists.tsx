@@ -1,5 +1,9 @@
 export const NavLinks = [
     {
+        name: "Home",
+        url: "/"
+    },
+    {
         name: "Destination",
         url: "/"
     },
@@ -14,14 +18,28 @@ export const NavLinks = [
     {
         name: "Bookings",
         url: "/"
-    }
+    },
 
 ];
 
+export const GlobalLinks = [
+    {
+        name: "Home",
+        url: "/"
+    },
+    {
+        name: "Login",
+        url: "Login"
+    },
+    {
+        name: "Signup",
+        url: "Signup"
+    }
+];
 export const NavButtons = [
     {
         name: "Login",
-        url: "../../components/pages/Home.tsx"
+        url: "Login"
     },
     {
         name: "Signup",
@@ -182,14 +200,6 @@ export const FooterTexts = {
                 name: "Bookings",
                 url: "/"
             },
-            {
-                name: "Login",
-                url: "/"
-            },
-            {
-                name: "Signup",
-                url: "/"
-            }
         ]
     },
     contacts: {

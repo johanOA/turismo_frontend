@@ -8,10 +8,10 @@ const AuthContext = createContext({
     isAuthenticated: false,
 })
 
-export function AuthProvider({children}: AuthProviderProps){
+export function AuthProvider({ children }: AuthProviderProps) {
 
     const [isAuthenticated] = useState(false);
-    
+
     return( 
         <AuthContext.Provider value={{ isAuthenticated }}> 
             {children}
