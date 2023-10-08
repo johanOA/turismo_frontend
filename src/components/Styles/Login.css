@@ -31,15 +31,6 @@
     justify-content: flex-end;
   }
 
-  .top-image{
-    height: 350px;
-    width: 550px;
-    object-fit: cover;
-    position: absolute;
-    bottom: 0px;
-    left: 100px;
-  }
-
 .main {
   width: 100%;
   height: auto;
