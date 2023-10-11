@@ -33,7 +33,7 @@ export const GlobalLinks = [
     },
     {
         name: "Signup",
-        url: "Signup"
+        url: "signup"
     }
 ];
 export const NavButtons = [
@@ -43,7 +43,7 @@ export const NavButtons = [
     },
     {
         name: "Signup",
-        url: "/"
+        url: "signup"
     }
 
 ];
