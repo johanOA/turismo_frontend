@@ -3,11 +3,13 @@
 body{
   margin-top: 7rem;
 }
+
 *{
   padding: 0;
   margin: 0;
   box-sizing: border-box;
 }
+
 body, input{
   font-family: 'Poppins', sans-serif;
 }
@@ -70,16 +72,16 @@ form.sign-in-form{
   z-index: 2;
 }
 
-form.sign-up-form{
+/* form.sign-up-form{
   z-index: 1;
   opacity: 0;
-}
+}  */
 
-.title{
+ .title{
   font-size: 2.5rem;
   color: #444;
   margin-bottom: 10px;
-}
+} 
 
 .input-field{
   max-width: 380px;
@@ -387,4 +389,4 @@ form.sign-up-form{
     bottom: 28%;
     left: 50%;
   }
-}
+} 
