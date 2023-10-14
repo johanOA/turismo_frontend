@@ -1,5 +1,6 @@
 /* Register.css */
-
+/* 
+<<<<<<< HEAD
 body{
   margin-top: 7rem;
 }
@@ -11,13 +12,17 @@ body{
 }
 
 body, input{
+=======
+body {
+  background-color: #f5f5f5;
+>>>>>>> 4c19d5cff9026089a9e6825cd1d33b7239a15a10
   font-family: 'Poppins', sans-serif;
   margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-}
+} */
 
 .container {
   position: relative;
@@ -153,6 +158,7 @@ input[type="password"]:focus {
   position: absolute;
   top: 0;
   left: 0;
+/* <<<<<<< HEAD
 }
 
 .signin-signup{
@@ -187,7 +193,7 @@ form.sign-in-form{
   z-index: 1;
   opacity: 0;
 }  */
-
+/*
  .title{
   font-size: 2.5rem;
   color: #444;
@@ -280,19 +286,23 @@ form.sign-in-form{
 
 .panels-container{
   position: absolute;
+=======
+>>>>>>> 4c19d5cff9026089a9e6825cd1d33b7239a15a10
   width: 100%;
   height: 100%;
   background: linear-gradient(45deg, rgba(255, 255, 255, 0.6) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.6) 50%, rgba(255, 255, 255, 0.6) 75%, transparent 75%, transparent);
   background-size: 20px 20px;
   pointer-events: none;
   z-index: -1;
-}
+} */
 
 .my-element {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
+/*   
+<<<<<<< HEAD
   transition: 1.1s .4s ease-in-out;
 
 }
@@ -302,6 +312,7 @@ form.sign-in-form{
 }
 
 /* Animation*/
+/* 
 .container.sign-up-mode:before{
   transform: translate(100%, -50%);
   right: 52%;
@@ -455,3 +466,15 @@ form.sign-in-form{
     left: 50%;
   }
 } 
+=======
+  height: 100%;
+  z-index: -2;
+  background-image: url('../../assets/undraw_cooking_p7m1.svg');
+  background-size: cover;
+  background-repeat: no-repeat;
+
+
+>>>>>>> 4c19d5cff9026089a9e6825cd1d33b7239a15a10
+*/
+}
+}
