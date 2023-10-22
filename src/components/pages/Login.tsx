@@ -7,6 +7,7 @@ import { useAuth } from "../../Auth/AuthProvider";
 import { Navigate } from "react-router-dom";
 import { Image } from "../atoms/Image"
 import "../Styles/Login.css";
+import axios from 'axios';
 
 export default function Login() {
 
@@ -15,31 +16,24 @@ export default function Login() {
   const auth = useAuth();
 
   async function handleSubmit() {
-
-    try {
-      let data = {idNumber: "119337",password: "password"};
-
-      const response = await fetch( 'https://beta.api.turismoenlacordillera.com/api/auth/login', {
-        // mode: "no-cors",
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data),
+    // Realizar la solicitud HTTP al endpoint
+    axios.post('https://beta.api.turismoenlacordillera.com/api/auth/login', {
+        idNumber: idNumber,
+        password: password
+    })
+      .then((response) => {
+        // Manejar la respuesta de la solicitud
+        if(response.data.success){
+          let loginInfo = response.data.data;
+          console.log(loginInfo)
+          console.log("Usuario iniciado correctamente")
+          return <Navigate to="/" />;
+      }else{
+        console.log(response.data.message)
+      }})
+      .catch((error) => {
+        console.error('Error al hacer la solicitud:', error);
       });
-
-      if(response.ok){
-        console.log("Usuario iniciado correctamente")
-        console.log(response);
-        return <Navigate to="/" />;
-
-      } else{
-        console.log("Usuario o contraseña incorrecta")
-        console.log(response);
-      }
-    } catch (error) {
-      console.log(error)
-    }
   }
 
   if(auth.isAuthenticated){
@@ -68,7 +62,6 @@ export default function Login() {
                   <a href="#" className="password-option">¿Olvidaste tu contraseña?</a>
                 </div>
                 <a className="login-button" onClick={handleSubmit}>Login</a>
-                {/* <button type="submit" className="login-button">Login</button> */}
               </form>
               <div className="form-group">
                 <div className="register-option">¿Aún no tienes una cuenta? 
