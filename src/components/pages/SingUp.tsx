@@ -2,20 +2,28 @@ import React, { useState } from 'react';
 import './../Styles/Register.css';
 
 function RegistroComponent() {
-  
-  const [usuario, setUsuario] = useState({
-    nombre: '',
+  const [userInfo, setUserInfo] = useState({
     email: '',
-    direccion: '',
-    telefono: '',
     password: '',
-    repeatPass: '',
-    // Campos adicionales para Emprendedora
-    nombreNegocio: '',
-    servicio: '',
+    passwordConfirmation: '',
+    idNumber: '',
+    names: '',
+    lastNames: '',
+    address: '',
+    phoneNumber: '',
   });
 
-  
+  const [microSite, setMicroSite] = useState({
+    ventureAddress: '',
+    ventureDescription: '',
+    ventureMapLatitude: '',
+    ventureMapLongitude: '',
+    ventureName: '',
+    microSiteAddress: '',
+    microSiteDescription: '',
+    micrositeExperiences: '',
+  });
+
   const [isPasswordsMatch, setIsPasswordsMatch] = useState(true);
   const [showFields, setShowFields] = useState(false);
   const [showUserPanel, setShowUserPanel] = useState(false);
@@ -25,33 +33,41 @@ function RegistroComponent() {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
 
-    const nombre = formData.get('nombre');
-    const email = formData.get('email');
-    const direccion = formData.get('direccion');
-    const telefono = formData.get('telefono');
-    const password = formData.get('password');
-    const repeatPass = formData.get('repeatPass');
+    // Actualiza userInfo usando el formulario
+    setUserInfo({
+      email: formData.get('email') as string,
+      password: formData.get('password') as string,
+      passwordConfirmation: formData.get('passwordConfirmation') as string,
+      idNumber: formData.get('idNumber') as string,
+      names: formData.get('names') as string,
+      lastNames: formData.get('lastNames') as string,
+      address: formData.get('address') as string,
+      phoneNumber: formData.get('phoneNumber') as string,
+    });
 
-    const usuario = {
-      nombre: nombre,
-      email: email,
-      direccion: direccion,
-      telefono: telefono,
-      password: password,
-      repeatPass: repeatPass,
-      // Campos adicionales para Emprendedora
-      nombreNegocio: showUserPanel ? '' : formData.get('nombreNegocio'),
-      servicio: showUserPanel ? '' : formData.get('servicio'),
-    };
+    // Si es una empresa, actualiza microSite usando el formulario
+    if (!showUserPanel) {
+      setMicroSite({
+        ventureAddress: formData.get('ventureAddress') as string,
+        ventureDescription: formData.get('ventureDescription') as string,
+        ventureMapLatitude: formData.get('ventureMapLatitude') as string,
+        ventureMapLongitude: formData.get('ventureMapLongitude') as string,
+        ventureName: formData.get('ventureName') as string,
+        microSiteAddress: formData.get('microSiteAddress') as string,
+        microSiteDescription: formData.get('microSiteDescription') as string,
+        micrositeExperiences: formData.get('micrositeExperiences') as string,
+      });
+    }
 
-    console.log(usuario);
+    if (userInfo.password === userInfo.passwordConfirmation) {
+      setIsPasswordsMatch(true); // Reset to true when passwords match
+      console.log(showUserPanel ? userInfo : { ...userInfo, ...microSite });
+    } else {
+      setIsPasswordsMatch(false); // Las contraseñas no coinciden
+    }
   };
 
-  const checkPasswordsMatch = () => {
-    setIsPasswordsMatch(usuario.password === usuario.repeatPass);
-  };
-
-  const showFieldsForUser = () => {
+ const showFieldsForUser = () => {
     setShowFields(true);
     setShowUserPanel(true);
     setShowExplanation(false);
@@ -73,19 +89,31 @@ function RegistroComponent() {
     <div className="container">
       <div className="forms-container">
         <div className="signin-signup">
-          {/* Título visible en todo momento */}
           <h2 className="title">Registro</h2>
           {showFields ? (
             <form className="sign-up-form" onSubmit={handleRegistro}>
+              {/* Campos para userInfo */}
               <div className="input-field">
                 <i className="fas fa-user"></i>
                 <input
                   type="text"
-                  id="nombre"
-                  name="nombre"
-                  placeholder="Nombre"
-                  value={usuario.nombre}
-                  onChange={(e) => setUsuario({ ...usuario, nombre: e.target.value })}
+                  id="names"
+                  name="names"
+                  placeholder="Nombres"
+                  value={userInfo.names}
+                  onChange={(e) => setUserInfo({ ...userInfo, names: e.target.value })}
+                  required
+                />
+              </div>
+              <div className="input-field">
+                <i className="fas fa-user"></i>
+                <input
+                  type="text"
+                  id="lastNames"
+                  name="lastNames"
+                  placeholder="Apellidos"
+                  value={userInfo.lastNames}
+                  onChange={(e) => setUserInfo({ ...userInfo, lastNames: e.target.value })}
                   required
                 />
               </div>
@@ -96,8 +124,8 @@ function RegistroComponent() {
                   id="email"
                   name="email"
                   placeholder="Email"
-                  value={usuario.email}
-                  onChange={(e) => setUsuario({ ...usuario, email: e.target.value })}
+                  value={userInfo.email}
+                  onChange={(e) => setUserInfo({ ...userInfo, email: e.target.value })}
                   required
                 />
               </div>
@@ -105,11 +133,23 @@ function RegistroComponent() {
                 <i className="fas fa-address-card"></i>
                 <input
                   type="text"
-                  id="direccion"
-                  name="direccion"
-                  placeholder="Direccion"
-                  value={usuario.direccion}
-                  onChange={(e) => setUsuario({ ...usuario, direccion: e.target.value })}
+                  id="address"
+                  name="address"
+                  placeholder="Dirección"
+                  value={userInfo.address}
+                  onChange={(e) => setUserInfo({ ...userInfo, address: e.target.value })}
+                  required
+                />
+              </div>
+              <div className="input-field">
+                <i className="fas fa-id-card"></i>
+                <input
+                  type="text"
+                  id="idNumber"
+                  name="idNumber"
+                  placeholder="Número de Identificación"
+                  value={userInfo.idNumber}
+                  onChange={(e) => setUserInfo({ ...userInfo, idNumber: e.target.value })}
                   required
                 />
               </div>
@@ -117,157 +157,107 @@ function RegistroComponent() {
                 <i className="fas fa-phone"></i>
                 <input
                   type="text"
-                  id="telefono"
-                  name="telefono"
-                  placeholder="Celular"
-                  value={usuario.telefono}
-                  onChange={(e) => setUsuario({ ...usuario, telefono: e.target.value })}
+                  id="phoneNumber"
+                  name="phoneNumber"
+                  placeholder="Teléfono"
+                  value={userInfo.phoneNumber}
+                  onChange={(e) => setUserInfo({ ...userInfo, phoneNumber: e.target.value })}
                   required
                 />
               </div>
               <div className="input-field">
-  <i className="fas fa-lock"></i>
-  <input
-    type="password"
-    id="password"
-    name="password"
-    placeholder="Password"
-    value={usuario.password}
-    onChange={(e) => {
-      setUsuario({ ...usuario, password: e.target.value });
-      checkPasswordsMatch(); // Llama a la función para verificar las contraseñas
-    }}
-    minLength={8}
-    required
-  />
-</div>
-<div className="input-field">
-  <i className="fas fa-lock"></i>
-  <input
-    type="password"
-    id="repeatPass"
-    name="repeatPass"
-    placeholder="Repite tu Password"
-    value={usuario.repeatPass}
-    onChange={(e) => {
-      setUsuario({ ...usuario, repeatPass: e.target.value });
-      checkPasswordsMatch(); // Llama a la función para verificar las contraseñas
-    }}
-    minLength={8}
-    required
-  />
-</div>
-              {/* Campos adicionales para Emprendedora */}
+                <i className="fas fa-lock"></i>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder="Contraseña"
+                  value={userInfo.password}
+                  onChange={(e) => setUserInfo({ ...userInfo, password: e.target.value })}
+                  minLength={8}
+                  required
+                />
+              </div>
+              <div className="input-field">
+                <i className="fas fa-lock"></i>
+                <input
+                  type="password"
+                  id="passwordConfirmation"
+                  name="passwordConfirmation"
+                  placeholder="Confirma tu Contraseña"
+                  value={userInfo.passwordConfirmation}
+                  onChange={(e) => setUserInfo({ ...userInfo, passwordConfirmation: e.target.value })}
+                  minLength={8}
+                  required
+                />
+              </div>
+              {/* Campos para microSite */}
               {!showUserPanel && (
                 <>
                   <div className="input-field">
-                    <i className="fas fa-user"></i>
+                    <i className="fas fa-building"></i>
                     <input
                       type="text"
-                      id="nombreNegocio"
-                      name="nombreNegocio"
+                      id="ventureName"
+                      name="ventureName"
                       placeholder="Nombre del Negocio"
-                      value={usuario.nombreNegocio}
-                      onChange={(e) => setUsuario({ ...usuario, nombreNegocio: e.target.value })}
+                      value={microSite.ventureName}
+                      onChange={(e) => setMicroSite({ ...microSite, ventureName: e.target.value })}
                       required
                     />
                   </div>
                   <div className="input-field">
-                    <i className="fas fa-user"></i>
+                    <i className="fas fa-map-marker-alt"></i>
                     <input
                       type="text"
-                      id="servicio"
-                      name="servicio"
-                      placeholder="Servicio"
-                      value={usuario.servicio}
-                      onChange={(e) => setUsuario({ ...usuario, servicio: e.target.value })}
+                      id="ventureAddress"
+                      name="ventureAddress"
+                      placeholder="Dirección del Negocio"
+                      value={microSite.ventureAddress}
+                      onChange={(e) => setMicroSite({ ...microSite, ventureAddress: e.target.value })}
                       required
                     />
                   </div>
-                </>
+                  <div className="input-field">
+                    <i className="fas fa-info-circle"></i>
+                    <textarea
+                      id="ventureDescription"
+                      name="ventureDescription"
+                      placeholder="Descripción del Negocio"
+                      value={microSite.ventureDescription}
+                      onChange={(e) => setMicroSite({ ...microSite, ventureDescription: e.target.value })}
+                      required
+                    ></textarea>
+                  </div>
+              </>
+
               )}
-              {!isPasswordsMatch && <p className="text-red-500 text-sm">Passwords do not match!</p>}
+              {!isPasswordsMatch && <p className="text-red-500 text-sm">¡Las contraseñas no coinciden!</p>}
               <button
                 type="submit"
                 disabled={
-                  usuario.nombre === '' ||
-                  usuario.email === '' ||
-                  usuario.direccion === '' ||
-                  usuario.telefono === '' ||
-                  usuario.password === '' ||
-                  usuario.repeatPass === '' ||
-                  (!showUserPanel && (usuario.nombreNegocio === '' || usuario.servicio === '')) ||
-                  !isPasswordsMatch
+                  !isPasswordsMatch ||
+                  // Puedes agregar más validaciones según las necesidades.
+                  userInfo.names === '' ||
+                  userInfo.email === '' ||
+                  userInfo.password !== userInfo.passwordConfirmation
                 }
                 className="btn"
               >
                 Registrarse
               </button>
-              <p className="social-text">O registrate con Google.</p>
-              <div className="social-media">
-                <a href="#" className="social-icon">
-                  <i className="fab fa-facebook-f"></i>
-                </a>
-                <a href="#" className="social-icon">
-                  <i className="fab fa-twitter"></i>
-                </a>
-                <a href="#" className="social-icon">
-                  <i className="fab fa-google"></i>
-                </a>
-                <a href="#" className="social-icon">
-                  <i className="fab fa-linkedin-in"></i>
-                </a>
-              </div>
+              {/* Puedes agregar más elementos si es necesario */}
             </form>
           ) : (
-            <>
-              {/* Texto de explicación */}
-              {showExplanation && (
-                <p>
-                  Únete como cliente para interactuar y opinar, o como emprendedora para mostrar tu negocio al mundo. Pero recuerda, ¡explorar es gratis!
-                </p>
-              )}
-              {/* Botones de selección */}
-              <div className="register-selection">
-                <button onClick={showFieldsForUser}>Usuario</button>
-                <button onClick={showFieldsForCompany}>Emprendedora</button>
-              </div>
-            </>
-          )}
-        </div>
-      </div>
-      <div className="panels-container">
-        {/* Botón para volver a la selección de tipo */}
-        {showFields && (
-          <div className="panel">
-            <button onClick={showSelectionButtons}>Volver</button>
-          </div>
-        )}
-        <div className={`panel ${showUserPanel ? 'left-panel' : 'right-panel'}`}>
-          {showFields ? (
-            showUserPanel ? (
-              <div>
-                <h3>Panel de Registro de Usuario</h3>
-                <p>Formulario de registro para usuarios</p>
-              </div>
-            ) : (
-              <div>
-                <h3>Panel de Registro de Empresa</h3>
-                <p>Formulario de registro para empresas</p>
-              </div>
-            )
-          ) : (
             <div>
-              {/* Contenido del panel izquierdo (Usuario) */}
+              {/* Este es el contenido que se muestra antes de seleccionar el tipo de registro */}
+              <button onClick={showFieldsForUser} className="btn">Registro para Usuarios</button>
+              <button onClick={showFieldsForCompany} className="btn">Registro para Empresas</button>
             </div>
           )}
-        </div>
-        <div className={`panel ${showUserPanel ? 'right-panel' : 'left-panel'}`}>
-          {/* Contenido del panel derecho (Empresa) */}
         </div>
       </div>
     </div>
   );
 }
-
 export default RegistroComponent;
