@@ -67,7 +67,7 @@ const NavBar = () => {
                     </div>
                     <div className="lg:hidden flex gap-4 items-center">
                         <select className="border-none outline-none font-light text-sm bg-transparent">
-                            <option value="EN" selected>EN</option>
+                            <option value="ES" selected>Es</option>
                             <option value="ITA">ITA</option>
                             <option value="FRA">FRA</option>
                         </select>

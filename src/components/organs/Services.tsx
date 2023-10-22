@@ -6,8 +6,8 @@ import { Card } from "../molecules/Card"
 import { useCallback } from "react"
 import Icon1 from "../../assets/icon1.png"
 import Icon2 from "../../assets/icon2.png"
-import Icon3 from "../../assets/icon3.png"
-import Icon4 from "../../assets/icon4.png"
+import Icon3 from "../../assets/mapa.png"
+import Icon4 from "../../assets/al-aire-libre.png"
 import { Fade } from "react-awesome-reveal"
 
 
