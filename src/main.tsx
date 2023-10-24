@@ -4,6 +4,7 @@ import App from './App'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from './components/pages/Login.tsx';
+import Panel from './components/pages/panel/Panel.tsx';
 import SignUp from './components/pages/SingUp.tsx'
  import { AuthProvider } from './Auth/AuthProvider.tsx';
 
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <SignUp/>
+  },
+  {
+    path: "/panel",
+    element: <Panel/>
   }
 ])
 
