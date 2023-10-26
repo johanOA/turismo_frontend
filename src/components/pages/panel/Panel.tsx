@@ -50,11 +50,6 @@ export default function Login() {
                 <Image className="h-full w-full object-cover" image={Image1} alt="Hero Background Vector" />
                 <Image className="top-image" image={Image2} alt="Login Template Image" />
           </div>
-         <div className="">
-           Main View 
-          </div>
-          
-          
         </section>
       <Footer />
       </div>
