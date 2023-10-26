@@ -1,22 +1,18 @@
 export const NavLinks = [
     {
-        name: "Home",
+        name: "Inicio",
         url: "/"
     },
     {
-        name: "Destination",
+        name: "Emprendimientos",
         url: "/"
     },
     {
-        name: "Hotels",
+        name: "Blogs",
         url: "/"
     },
     {
-        name: "Flights",
-        url: "/"
-    },
-    {
-        name: "Bookings",
+        name: "Rutas Turísticas",
         url: "/"
     },
 
@@ -28,21 +24,21 @@ export const GlobalLinks = [
         url: "/"
     },
     {
-        name: "Login",
-        url: "Login"
+        name: "Ingresar",
+        url: "login"
     },
     {
-        name: "Signup",
+        name: "Registrarse",
         url: "signup"
     }
 ];
 export const NavButtons = [
     {
-        name: "Login",
-        url: "Login"
+        name: "Ingresar",
+        url: "login"
     },
     {
-        name: "Signup",
+        name: "Registrarse",
         url: "signup"
     }
 
@@ -50,40 +46,40 @@ export const NavButtons = [
 
 
 export const HeroTexts = {
-    firstText: "BEST DESITNATIONS AROUND THE WORLD",
-    secondText: "Travel, enjoy and live a new and full life.",
-    thirdText: "Built Wicket longer admire do barton vantity itself do in it. Preferred to sportsmen it engrossed listening. Park gate sell they west hard for the.",
-    firstButton: "Find out more",
-    secondButton: 'Play Demo'
+    firstText: "MEJORES DESTINOS ALREDEDOR DEL MUNDO",
+    secondText: "Viaja, disfruta y vive una vida nueva y plena.",
+    thirdText: "Explora nuevas culturas y maravillas naturales en destinos impresionantes en todo el mundo. Descubre la belleza de lugares remotos y la riqueza de experiencias que te esperan.",
+    firstButton: "Ver micrositio Random",
+    secondButton: 'Reproduce la intro'
 }
 
 
 export const ServiceTexts = {
-    firstText: "CATEGORY",
-    secondText: "We Offer Best Services",
+    firstText: "Categorías de blogs",
+    secondText: "Las categorías de blogs más buscadas",
     cards: [
         {
-            firstText: "Calculated Weather",
-            secondText: "Built Wicket longer admire do barton vantity itself do in it."
+            firstText: "Noticias",
+            secondText: "Léa las últimas noticias y manténgase informado sobre eventos locales y globales. Descubra historias intrigantes y análisis a fondo para estar al tanto de lo que está sucediendo en el pcc"
         },
         {
-            firstText: "Best Flight",
-            secondText: "engrossed listening. Park gate sell they west hard for the."
+            firstText: "Experiencias de viajeros",
+            secondText: "Descubre relatos de viajeros y sus consejos para aventuras únicas en todo el mundo."
         },
         {
-            firstText: "Local Events",
-            secondText: "barton vantity itself do in it.Preferred to men it engrossed listening."
+            firstText: "Destinos Turísticos",
+            secondText: "Explora el mundo a través de nuestras guías de viaje, descubre la esencia de cada lugar, sus secretos mejor guardados y planifica tus aventuras con consejos expertos."
         },
         {
-            firstText: "Customizition",
-            secondText: "We deliver outsourced aviation services for military customers."
+            firstText: "Aventuras al Aire Libre",
+            secondText: "Embárcate en emocionantes experiencias en la naturaleza. Desde senderismo en majestuosos paisajes hasta desafiantes actividades al aire libre, te llevaremos a la belleza salvaje del mundo",
         }
     ]
 }
 
 export const TopDestinationTexts = {
-    firstText: "Top selling",
-    secondText: "Top Destinations",
+    firstText: "Lo más buscado",
+    secondText: "Top micro sitios",
     cards: [
         {
             country: "Rome, Italy",
@@ -119,59 +115,58 @@ export const TopDestinationTexts = {
 }
 
 export const BookingStepsTexts = {
-    firstText: "Easy and Fast",
-    secondText: "Book your next trip in 3 easy steps",
+    firstText: "Fácil y rápido",
+    secondText: "Crea un micro sitio y comparte rutas turisticas, noticias y experiencias",
     listOfSteps: [
         {
-            text: "Choose Destination lorem ipsum dolor sit amet, consectetur adipiscing elit.Urna, tortor tempus."
+            text: "Crea una cuenta como emprendedora y llena los datos de tu emprendimiento"
         },
         {
-            text: "Make Payment lorem ipsum dolor sit amet, consectetur adipiscing elit.Uma, totor tempus."
+            text: "Cuando el sitio sea aprobado recibirás un correo"
         },
         {
-            text: "Reach Airport on Selected Date lorem ipsum dolor sit amet.consectetur adipiscing elit.Uma totor tempus."
+            text: "Entra al panel de emprendedora y comienza a customizar tú sitio!"
         }
     ],
     cardOne:
     {
-        name: "Trip To Greece",
-        date: "14-29 June  |  by Robbin Jobs",
-        people: "24 people going"
+        name: "Emprendimiento de paula",
+        date: "Este emprendimiento nace de la herencia cultura",
+        people: "24 reseñas positivas"
     },
     cardTwo: {
-        status: "Ongoing",
-        destination: "Trip to Rome",
-        completion: "40% Completed"
+        status: "En curso",
+        destination: "Visitando la casa de mi taita",
+        completion: "tomando café"
     }
 
 }
 
 export const TestimonialTexts = {
-    firstText: "TESTIMONIALS",
-    secondText: "What people say about Us.",
-    feedBacks: [
-        {
-            text: "You did a fabulous job. There were no hitches. Thank you again for all your work planning this trip.",
-            person: "Mike taylor",
-            location: "Lahore, Pakistan"
-        },
-        {
-            text: "Jadoo was great with the entire process from planning to updates during the trip. We had 11 people and everything was perfectly executed. We appreciate all of her hard work. It was truly the trip of a lifetime. Thank you!",
-            person: "Gina",
-            location: "Owerri, Nigeria"
-        },
-        {
-            text: "Booking through you was very easy and made our lives so much easier. I have nothing bad to say! Thank you for giving us tips and guidance before we left on what to bring and such, that was very helpful!",
-            person: "Emma",
-            location: "Vancouver, Canada"
-        },
-        {
-            text: "Thank you for your recommendation and putting the trip together. The resort was absolutely beautiful. The infinity pools, the palm trees in the main pool, the infinity pool in out preferred area overlooking the gulf and the golf course were exceptional....",
-            person: "Loveth",
-            location: "Lagos, Nigeria"
-        },
-    ],
-}
+    firstText: "TESTIMONIOS",
+    secondText: "Lo que las personas piensan de nosotros.",
+    feedBacks: [           
+    {
+      text: "Gracias a la ayuda de esta maravillosa empresa, he podido transformar mi finca en un destino turístico. Ahora, no solo he mejorado mis ingresos, sino que también he compartido la belleza de mi tierra con viajeros de todo el mundo. ¡Estoy eternamente agradecida!",
+      person: "Maria Fernanda",
+      location: "Salento, Quindío, Colombia"    
+    },
+    {
+      text: "Nunca imaginé que mi pequeña finca podría atraer a tantos visitantes. Gracias a esta empresa, he aprendido a crear rutas turísticas únicas que han dado un impulso increíble a mi economía. ¡Un sueño hecho realidad!",
+      person: "Carlos",
+      location: "Armenia, Quindío, Colombia"     
+    },
+    {
+      text: "La asesoría y el apoyo brindados por esta empresa han sido cruciales para mi éxito en el negocio turístico. Mi finca ahora es conocida en todo el mundo, y todo esto se lo debo a ellos. ¡No puedo agradecer lo suficiente!",
+      person: "Isabela",
+      location: "Calarcá, Quindío, Colombia"   
+    },
+    {
+      text: "Esta empresa ha cambiado mi vida por completo. Gracias a su ayuda, he podido recibir a turistas en mi finca y proporcionarles una experiencia auténtica y hermosa. Mis ingresos se han duplicado, y ahora vivo mi pasión todos los días. ¡Mil gracias!",
+      person: "Santiago",
+      location: "Montenegro, Quindío, Colombia"      
+    },
+  ],}
 
 export const NewsletterTexts = {
     firstText: "Subscribe to get information, latest news and other interesting offers about Jadoo.",
@@ -180,68 +175,61 @@ export const NewsletterTexts = {
 }
 
 export const FooterTexts = {
-    underLogoText: "Book your trip in minutes, get full control for much longer.",
+    underLogoText: "Turismo en la cordillera es una empresa colombiana",
     quickLinks: {
-        caption: "Quick Links",
+        caption: "Página",
         links: [
             {
-                name: "Destination",
+                name: "Emprendimientos",
                 url: "/"
             },
             {
-                name: "Hotels",
+                name: "Blogs",
                 url: "/"
             },
             {
-                name: "Flights",
-                url: "/"
-            },
-            {
-                name: "Bookings",
+                name: "Rutas Turísticas",
                 url: "/"
             },
         ]
     },
     contacts: {
-        caption: "Contacts",
+        caption: "Contacto",
         links: [
             {
                 name: "FAQs",
                 url: "/"
             },
             {
-                name: "Help",
+                name: "Necesitas ayuda?",
                 url: "/"
             },
             {
-                name: "Policies",
+                name: "Política de Privacidad",
                 url: "/"
             },
             {
-                name: "Terms & Conditions",
+                name: "Términos y Condiciones",
                 url: "/"
             }
         ]
     },
     more: {
-        caption: "More",
+        caption: "Nosotros",
         links: [
             {
-                name: "Career",
+                name: "Nuestra visión",
                 url: "/"
             },
             {
-                name: "Airlines",
+                name: "Nuestra misión",
                 url: "/"
             },
             {
-                name: "Airline Fees",
-                url: "/"
-            },
-            {
-                name: "Low Fare Tips",
+                name: "Nuestro equipo de trabajo",
                 url: "/"
             }
+            
         ]
     }
 }

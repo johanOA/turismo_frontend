@@ -5,14 +5,18 @@ import Image2 from "../../assets/imageLogo.png"
 import { useState } from "react";
 import { useAuth } from "../../Auth/AuthProvider";
 import { Navigate } from "react-router-dom";
-import { Image } from "../atoms/Image"
+import { Image } from "../atoms/Image";
+// import httpClient from "../../config/httpClient.js"; 
 import "../Styles/Login.css";
 import axios from 'axios';
+import Modal from 'react-modal';
 
 export default function Login() {
 
   const [ idNumber, setIdNumber ] = useState("");
   const [ password, setPassword ] = useState("");
+  const [mostrarIncorrecto, setMostrarIncorrecto] = useState(false);
+  const [mostrarCorrecto, setMostrarCorrecto] = useState(false);
   const auth = useAuth();
 
   async function handleSubmit() {
@@ -27,8 +31,12 @@ export default function Login() {
           let loginInfo = response.data.data;
           console.log(loginInfo)
           console.log("Usuario iniciado correctamente")
-          return <Navigate to="/" />;
+          // Mostrar el popup de login correcto
+          setMostrarCorrecto(true);
+          // return <Navigate to="/" />;
       }else{
+        // Mostrar el popup de login incorrecto
+        setMostrarIncorrecto(true);
         console.log(response.data.message)
       }})
       .catch((error) => {
@@ -61,7 +69,7 @@ export default function Login() {
                   <input type="password" value={password} onChange={(e) => setPassword (e.target.value)} className="login-input" placeholder="Ingresa tu contraseña" />
                   <a href="#" className="password-option">¿Olvidaste tu contraseña?</a>
                 </div>
-                <a className="login-button" onClick={handleSubmit}>Login</a>
+                <a className="login-button" onClick={handleSubmit}>Iniciar sesion</a>
               </form>
               <div className="form-group">
                 <div className="register-option">¿Aún no tienes una cuenta? 

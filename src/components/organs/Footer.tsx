@@ -83,10 +83,6 @@ const Footer = () => {
                         </List>
                     </ul>
 
-                    <Text as="p" className="text-base font-light text-color4">
-                        Discover Our App
-                    </Text>
-                    <Image image={app} className="w-28" alt="App Download" as="a" href="/" />
                 </div>
             </section>
             <Text className="text-center bg-color4 text-white text-xs py-6 font-light">

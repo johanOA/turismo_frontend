@@ -1,16 +1,16 @@
 import { useState, useEffect } from "react"
-import { Image } from "../atoms/Image";
-import { Button } from "../atoms/Button"
-import Logo from "../../assets/logo1.png"
-import { NavButtons, NavLinks } from "../particles/DataLists"
-import { List } from "../atoms/List";
-import { useAuth } from "../../Auth/AuthProvider";
+import { Image } from "../../../atoms/Image";
+import { Button } from "../../../atoms/Button"
+import Logo from "../../../../assets/logo1.png"
+import { NavButtons, NavLinks } from "../../../particles/DataLists"
+import { List } from "../../../atoms/List";
+import { useAuth } from "../../../../Auth/AuthProvider";
 import { NavLink, useNavigate } from "react-router-dom";
 import { ArrowCircleRight, CirclesFour } from "@phosphor-icons/react";
 import { Slide } from "react-awesome-reveal";
 
 
-const NavBar = () => {
+const NavBarPanel = () => {
     const navigate = useNavigate();
 
    const { isAuthenticated, userInfo} = useAuth();
@@ -35,7 +35,7 @@ const NavBar = () => {
 
 
     return (
-        <header className="w-full h-auto bg-transparent overflow-x-hidden fixed z-10 0 top-0 left-0">
+        <header className="w-full h-auto bg-transparent overflow-x-hidden   z-10 0 top-0 left-0">
             <Slide direction="down">
                 <nav className={`w-full md:h-24 h-20 ${navBarColor ? "bg-white" : "bg-transparent"} lg:px-24 md:px-12 px-8 flex justify-between items-center`}>
                     <Image as="a" href="/" className="md:h-10 h-8" image={Logo} alt="Logo" />
@@ -111,4 +111,4 @@ const NavBar = () => {
     )
 }
 
-export default NavBar
+export default NavBarPanel
