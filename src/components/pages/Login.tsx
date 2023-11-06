@@ -6,39 +6,47 @@ import { useState } from "react";
 import { useAuth } from "../../Auth/AuthProvider";
 import { Navigate } from "react-router-dom";
 import { Image } from "../atoms/Image";
-import httpClient from "../../config/httpClient.js"; 
+// import httpClient from "../../config/httpClient.js"; 
 import "../Styles/Login.css";
+import axios from 'axios';
+import Modal from 'react-modal';
 
 export default function Login() {
 
-  const [ email, setEmail ] = useState("");
+  const [ idNumber, setIdNumber ] = useState("");
   const [ password, setPassword ] = useState("");
-  const { isAuthenticated, setIsAuthenticated, userInfo,setUserInfo} = useAuth();
-  if(isAuthenticated){
-    return <Navigate to="/" />
-  }
-  const handleSubmit  = ()  => {
-	httpClient.post("auth/login", {idNumber:email,password:password})
+  const [mostrarIncorrecto, setMostrarIncorrecto] = useState(false);
+  const [mostrarCorrecto, setMostrarCorrecto] = useState(false);
+  const auth = useAuth();
+
+  async function handleSubmit() {
+    // Realizar la solicitud HTTP al endpoint
+    axios.post('https://beta.api.turismoenlacordillera.com/api/auth/login', {
+        idNumber: idNumber,
+        password: password
+    })
       .then((response) => {
         // Manejar la respuesta de la solicitud
-        if(response.data.success)
-            {
-              let responseUserInfo = response.data.data;
-              var  newUserInfo = {
-                  accessCode: responseUserInfo.accessCode??"2",
-                  accessDescription: responseUserInfo.accessDescription??"",
-                  email: responseUserInfo.email??"",
-                  username: responseUserInfo.username??"",
-                }
-                setIsAuthenticated(true);
-                setUserInfo(newUserInfo);
-                console.log(userInfo);
-            }
-      })
+        if(response.data.success){
+          let loginInfo = response.data.data;
+          console.log(loginInfo)
+          console.log("Usuario iniciado correctamente")
+          // Mostrar el popup de login correcto
+          setMostrarCorrecto(true);
+          // return <Navigate to="/" />;
+      }else{
+        // Mostrar el popup de login incorrecto
+        setMostrarIncorrecto(true);
+        console.log(response.data.message)
+      }})
       .catch((error) => {
         console.error('Error al hacer la solicitud:', error);
       });
-   }
+  }
+
+  if(auth.isAuthenticated){
+    return <Navigate to="/" />
+  }
 
   return (
       <div className="login-container">
@@ -52,21 +60,24 @@ export default function Login() {
           </div>
           <main className="main">
             <div className="login-content">
-              <h1 className="login-title">Ingreso</h1>
-              <form className="login-form">
+              <h1 className="login-title">Login</h1>
+              <form className="login-form" onSubmit={handleSubmit}>
                 <div className="form-group">
-                  <label>Numero de Identidad</label>
-                  <input type="text" value={email} onChange={(e) => setEmail (e.target.value )} className="login-input" placeholder="123456789" />
+                  <input type="text" value={idNumber} onChange={(e) => setIdNumber (e.target.value )} className="login-input" placeholder="Numero de Identidad" />
                 </div>
                 <div className="form-group">
-                  <label>Contraseña</label>
                   <input type="password" value={password} onChange={(e) => setPassword (e.target.value)} className="login-input" placeholder="Ingresa tu contraseña" />
+                  <a href="#" className="password-option">¿Olvidaste tu contraseña?</a>
                 </div>
-                <a className="login-button" onClick={handleSubmit}>Login</a>
+                <a className="login-button" onClick={handleSubmit}>Iniciar sesion</a>
               </form>
+              <div className="form-group">
+                <div className="register-option">¿Aún no tienes una cuenta? 
+                  <a href="/Register" className="link"> Clic aquí</a>
+                </div>
+              </div>
             </div>
           </main>
-          
         </section>
       <Footer />
       </div>
