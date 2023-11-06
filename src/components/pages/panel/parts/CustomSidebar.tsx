@@ -35,45 +35,45 @@ const CustomSidebar = () => {
     <Menu>
       <MenuItem  icon={<House/>} onClick={() => navigate("/panel/dashboard")} > Inicio </MenuItem>
       <SubMenu icon={<Gear/>} label="Ajustes">
-        <MenuItem icon={<User/>} onClick={() => navigate("/panel/profile")}> Perfil </MenuItem>
+        <MenuItem rootStyles={{backgroundColor:Colors.primarySoft}} icon={<User/>} onClick={() => navigate("/panel/profile")}> Perfil </MenuItem>
       </SubMenu>
 
       <SubMenu icon={<UserCircleGear/>} label="Administrador">
 
-        <SubMenu  icon={<User/>} label="Usuarios">
-            <MenuItem icon={<UserList/>} onClick={() => navigate("/panel/admin/users")}> Lista </MenuItem>
-            <MenuItem icon={<Gear/>} onClick={() => navigate("/panel/admin/userSettings")} > Ajustes </MenuItem>
+        <SubMenu rootStyles={{backgroundColor:Colors.primarySoft}} icon={<User/>} label="Usuarios">
+            <MenuItem rootStyles={{backgroundColor:Colors.primarySoft}} icon={<UserList/>} onClick={() => navigate("/panel/admin/users")}> Lista </MenuItem>
+            <MenuItem rootStyles={{backgroundColor:Colors.primarySoft}} icon={<Gear/>} onClick={() => navigate("/panel/admin/userSettings")} > Ajustes </MenuItem>
         </SubMenu>
-        <SubMenu icon={<Desktop/>}label="Micrositios">
-            <MenuItem icon={<List/>}>  Lista </MenuItem>
-            <MenuItem icon={<ArchiveBox/>}> Solicitudes </MenuItem>
-            <MenuItem icon={<Gear/>}> Ajustes </MenuItem>
+        <SubMenu rootStyles={{backgroundColor:Colors.primarySoft}} icon={<Desktop/>}label="Micrositios">
+            <MenuItem rootStyles={{backgroundColor:Colors.primarySoft}} icon={<List/>}>  Lista </MenuItem>
+            <MenuItem rootStyles={{backgroundColor:Colors.primarySoft}} icon={<ArchiveBox/>}> Solicitudes </MenuItem>
+            <MenuItem rootStyles={{backgroundColor:Colors.primarySoft}} icon={<Gear/>}> Ajustes </MenuItem>
         </SubMenu>
-        <SubMenu icon={<MapPin/>} label="Rutas turísticas">
-            <MenuItem icon={<List/>}> Lista </MenuItem>
-            <MenuItem icon={<PlusCircle/>}> Crear </MenuItem>
-            <MenuItem icon={<Gear/>}> Ajustes </MenuItem>
+        <SubMenu rootStyles={{backgroundColor:Colors.primarySoft}} icon={<MapPin/>} label="Rutas turísticas">
+            <MenuItem rootStyles={{backgroundColor:Colors.primarySoft}} icon={<List/>}> Lista </MenuItem>
+            <MenuItem rootStyles={{backgroundColor:Colors.primarySoft}} icon={<PlusCircle/>}> Crear </MenuItem>
+            <MenuItem rootStyles={{backgroundColor:Colors.primarySoft}} icon={<Gear/>}> Ajustes </MenuItem>
         </SubMenu>
 
       </SubMenu>
       <SubMenu icon={<Desktop/>} label="Micrositio">
 
-        <SubMenu label="Contenido">
-            <MenuItem icon={<List/>}> Lista </MenuItem>
-            <MenuItem icon={<Gear/>}> Ajustes </MenuItem>
-            <MenuItem icon={<FloppyDiskBack/>}> Backup </MenuItem>
+        <SubMenu rootStyles={{backgroundColor:Colors.primarySoft}} label="Contenido">
+            <MenuItem rootStyles={{backgroundColor:Colors.primarySoft}} icon={<List/>}> Lista </MenuItem>
+            <MenuItem rootStyles={{backgroundColor:Colors.primarySoft}} icon={<Gear/>}> Ajustes </MenuItem>
+            <MenuItem rootStyles={{backgroundColor:Colors.primarySoft}} icon={<FloppyDiskBack/>}> Backup </MenuItem>
         </SubMenu>
 
-        <SubMenu icon={<Mountains/>} label="Sitios de interés">
-            <MenuItem icon={<List/>}> Lista </MenuItem>
-            <MenuItem icon={<Gear/>}> Ajustes </MenuItem>
-            <MenuItem icon={<FloppyDiskBack/>}> Backup </MenuItem>
+        <SubMenu rootStyles={{backgroundColor:Colors.primarySoft}} icon={<Mountains/>} label="Sitios de interés">
+            <MenuItem rootStyles={{backgroundColor:Colors.primarySoft}} icon={<List/>}> Lista </MenuItem>
+            <MenuItem  rootStyles={{backgroundColor:Colors.primarySoft}}icon={<Gear/>}> Ajustes </MenuItem>
+            <MenuItem rootStyles={{backgroundColor:Colors.primarySoft}} icon={<FloppyDiskBack/>}> Backup </MenuItem>
         </SubMenu>
 
         <SubMenu icon={<MapPin/>} label="Rutas turísticas">
-            <MenuItem icon={<List/>}> Lista </MenuItem>
-            <MenuItem icon={<Gear/>}> Ajustes </MenuItem>
-            <MenuItem icon={<FloppyDiskBack/>}> Backup </MenuItem>
+            <MenuItem rootStyles={{backgroundColor:Colors.primarySoft}} icon={<List/>}> Lista </MenuItem>
+            <MenuItem rootStyles={{backgroundColor:Colors.primarySoft}} icon={<Gear/>}> Ajustes </MenuItem>
+            <MenuItem rootStyles={{backgroundColor:Colors.primarySoft}} icon={<FloppyDiskBack/>}> Backup </MenuItem>
         </SubMenu>
 
       </SubMenu>
