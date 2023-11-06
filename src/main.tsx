@@ -7,6 +7,7 @@ import Login from './components/pages/Login.tsx';
 import Panel from './components/pages/panel/Panel.tsx';
 import SignUp from './components/pages/SingUp.tsx'
  import { AuthProvider } from './Auth/AuthProvider.tsx';
+ import { ProSidebarProvider } from "react-pro-sidebar";
 
 const router = createBrowserRouter([
   {
@@ -30,7 +31,9 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <AuthProvider> 
+    <ProSidebarProvider>
       <RouterProvider router={router} />
+      </ProSidebarProvider>
      </AuthProvider>
   </React.StrictMode>,
 )
