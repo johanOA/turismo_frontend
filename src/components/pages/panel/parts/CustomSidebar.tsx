@@ -4,11 +4,14 @@ import {Gear, List, User,UserCircleGear,Desktop,UserList,
 import React, { useState } from 'react';
 import { useAuth } from "../../../../Auth/AuthProvider";
 import  Colors from "../../../../constants/Colors.js";
+import { useNavigate } from 'react-router-dom';
 
 import { Sidebar, Menu, MenuItem, SubMenu,useProSidebar} from 'react-pro-sidebar';
 
 
 const CustomSidebar = () => {
+  const navigate = useNavigate();
+
   const { isAuthenticated, userInfo} = useAuth();
   const { collapseSidebar, toggleSidebar, collapsed, toggled, broken, rtl } =
   useProSidebar();
@@ -30,21 +33,19 @@ const CustomSidebar = () => {
       style={{ height: "100vh" }}
     >
     <Menu>
-      <MenuItem  icon={<House/>} > Inicio </MenuItem>
+      <MenuItem  icon={<House/>} onClick={() => navigate("/panel/dashboard")} > Inicio </MenuItem>
       <SubMenu icon={<Gear/>} label="Ajustes">
-        <MenuItem icon={<User/>}> Perfil </MenuItem>
+        <MenuItem icon={<User/>} onClick={() => navigate("/panel/profile")}> Perfil </MenuItem>
       </SubMenu>
 
       <SubMenu icon={<UserCircleGear/>} label="Administrador">
 
         <SubMenu  icon={<User/>} label="Usuarios">
-            <MenuItem icon={<UserList/>} > Lista </MenuItem>
-            <MenuItem icon={<UserPlus/>} > Crear </MenuItem>
-            <MenuItem icon={<Gear/>}> Ajustes </MenuItem>
+            <MenuItem icon={<UserList/>} onClick={() => navigate("/panel/admin/users")}> Lista </MenuItem>
+            <MenuItem icon={<Gear/>} onClick={() => navigate("/panel/admin/userSettings")} > Ajustes </MenuItem>
         </SubMenu>
         <SubMenu icon={<Desktop/>}label="Micrositios">
             <MenuItem icon={<List/>}>  Lista </MenuItem>
-            <MenuItem icon={<PlusCircle/>}> Crear </MenuItem>
             <MenuItem icon={<ArchiveBox/>}> Solicitudes </MenuItem>
             <MenuItem icon={<Gear/>}> Ajustes </MenuItem>
         </SubMenu>

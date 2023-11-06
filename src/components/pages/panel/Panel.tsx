@@ -8,22 +8,19 @@ import { Navigate } from "react-router-dom";
 import { Image } from "../../atoms/Image";
 import httpClient from "../../../config/httpClient.js"; 
 import CustomSidebar from "./parts/CustomSidebar.js";
+import { Outlet } from 'react-router-dom';
 
+import {  Route, Routes } from "react-router-dom";
 
 export default function Panel() {
 
   const { isAuthenticated, setIsAuthenticated, userInfo,setUserInfo} = useAuth();
   return (
-      <div className="login-container">
+      <div className="panel-container">
         <NavBarPanel />
         <section className="w-full h-full relative overflow-x-hidden flex justify-between">
           <CustomSidebar/>
-
-        <div className="h-[60%] w-[80%] lg:h-[90vh] md:h-[50vh] lg:w-1/2 md:w-[55%] relative">
-                <Image className="h-full w-full object-cover" image={Image1} alt="Hero Background Vector" />
-                <Image className="top-image" image={Image2} alt="Login Template Image" />
-          </div>
-
+          <Outlet />
         </section>
       <Footer />
       </div>
