@@ -69,6 +69,7 @@ export default function Login() {
                   <input type="text" value={email} onChange={(e) => setEmail (e.target.value )} className="login-input" placeholder="123456789" />
                 </div>
                 <div className="form-group">
+                  
                   <label>Contraseña</label>
                   <input type="password" value={password} onChange={(e) => setPassword (e.target.value)} className="login-input" placeholder="Ingresa tu contraseña" />
                 </div>
