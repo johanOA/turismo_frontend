@@ -1,29 +1,19 @@
-import Modal from 'react-modal';
-import { useState } from "react";
+import Modal from "react-modal";
+import "./popup.css"
 
-export default function popup() {
-
-const [mostrarIncorrecto, setMostrarIncorrecto] = useState(true);
-const [mostrarCorrecto, setMostrarCorrecto] = useState(true);
-
-return (
-    <>
-    {/* Modal de inicio de sesión incorrecto */}
-    <Modal isOpen={mostrarIncorrecto} contentLabel="Inicio de sesión incorrecto" className="incorrect-login">
-        <h2>Inicio de sesión incorrecto</h2>
-        <button className= "login-button" onClick={() => setMostrarIncorrecto(false)}>Cerrar</button>
-    </Modal>
-
-    {/* Modal de inicio de sesión correcto */}
-    <Modal
-        isOpen={mostrarCorrecto}
-        contentLabel="Inicio de sesión correcto"
-        className="successful-login"
-    >
-        <h2>Inicio de sesión correcto</h2>
-        {/* Mensaje de éxito u otra información */}
-        <button onClick={() => setMostrarCorrecto(false)}>Cerrar</button>
-    </Modal>
-    </>
-    );
+export default function Popup({ isOpen, onClose, title, message }) {
+  return (
+      <div className='container-buton-popup'>
+            <Modal
+            isOpen={isOpen}
+            contentLabel="Popup"
+            className="popup-modal"
+            >
+            <h2 className="title-popup">{title}</h2>
+            {/* Aquí puedes agregar tu icono en la mitad */}
+            <p className="text-popup">{message}</p>
+            <button className="btn-popup" onClick={onClose}>Cerrar</button>
+            </Modal>
+      </div>
+  );
 }

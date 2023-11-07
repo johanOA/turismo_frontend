@@ -6,53 +6,55 @@ import { useState } from "react";
 import { useAuth } from "../../Auth/AuthProvider";
 import { Navigate } from "react-router-dom";
 import { Image } from "../atoms/Image";
-// import httpClient from "../../config/httpClient.js"; 
+import httpClient from "../../config/httpClient.js"; 
 import "../Styles/Login.css";
-import axios from 'axios';
-import Modal from 'react-modal';
+import Popup from "../pages/utils/popup";
 
 export default function Login() {
 
   const [ idNumber, setIdNumber ] = useState("");
   const [ password, setPassword ] = useState("");
-  const [mostrarIncorrecto, setMostrarIncorrecto] = useState(false);
-  const [mostrarCorrecto, setMostrarCorrecto] = useState(false);
-  const auth = useAuth();
+  const { isAuthenticated, setIsAuthenticated, userInfo,setUserInfo} = useAuth();
+  const [showPopup, setShowPopup] = useState(false); // Nuevo estado para mostrar el popup
+  const [popupMessage, setPopupMessage] = useState(""); // Mensaje de error del popup
 
-  async function handleSubmit() {
-    // Realizar la solicitud HTTP al endpoint
-    axios.post('https://beta.api.turismoenlacordillera.com/api/auth/login', {
-        idNumber: idNumber,
-        password: password
-    })
+  if(isAuthenticated){
+    return <Navigate to="/" />
+  }
+
+  const handleSubmit  = ()  => {
+	httpClient.post("auth/login", {idNumber:idNumber,password:password})
       .then((response) => {
         // Manejar la respuesta de la solicitud
-        if(response.data.success){
-          let loginInfo = response.data.data;
-          console.log(loginInfo)
-          console.log("Usuario iniciado correctamente")
-          // Mostrar el popup de login correcto
-          setMostrarCorrecto(true);
-          // return <Navigate to="/" />;
-      }else{
-        // Mostrar el popup de login incorrecto
-        setMostrarIncorrecto(true);
-        console.log(response.data.message)
-      }})
+        if(response.data.success)
+            {
+              let responseUserInfo = response.data.data;
+              var  newUserInfo = {
+                  accessCode: responseUserInfo.accessCode??"2",
+                  accessDescription: responseUserInfo.accessDescription??"",
+                  email: responseUserInfo.email??"",
+                  username: responseUserInfo.username??"",
+                }
+                setIsAuthenticated(true);
+                setUserInfo(newUserInfo);
+                console.log(userInfo);
+            }else{
+              setPopupMessage("Usuario o contraseña incorrecta"); // Establece el mensaje de error
+              setShowPopup(true); // Muestra el popup en caso de error
+            }
+      })
       .catch((error) => {
-        console.error('Error al hacer la solicitud:', error);
+        console.error('Error al hacer la solicitud:', error);// Muestra el popup en caso de error
       });
   }
 
-  if(auth.isAuthenticated){
-    return <Navigate to="/" />
+   const closePopup = () => {
+    setShowPopup(false);
   }
 
   return (
       <div className="login-container">
-        <header className="header">
         <NavBar />
-        </header>
         <section className="login-section">
           <div className="h-[60%] w-[80%] lg:h-[90vh] md:h-[50vh] lg:w-1/2 md:w-[55%] relative">
               <Image className="h-full w-full object-cover" image={Image1} alt="Hero Background Vector" />
@@ -66,10 +68,18 @@ export default function Login() {
                   <input type="text" value={idNumber} onChange={(e) => setIdNumber (e.target.value )} className="login-input" placeholder="Numero de Identidad" />
                 </div>
                 <div className="form-group">
+                  
+                  <label>Contraseña</label>
                   <input type="password" value={password} onChange={(e) => setPassword (e.target.value)} className="login-input" placeholder="Ingresa tu contraseña" />
                   <a href="#" className="password-option">¿Olvidaste tu contraseña?</a>
                 </div>
-                <a className="login-button" onClick={handleSubmit}>Iniciar sesion</a>
+                <a className="login-button" onClick={handleSubmit}>Login</a>
+                <Popup
+                  isOpen={showPopup}
+                  onClose={closePopup}
+                  title="Error"
+                  message={popupMessage}
+                />
               </form>
               <div className="form-group">
                 <div className="register-option">¿Aún no tienes una cuenta? 
@@ -79,7 +89,7 @@ export default function Login() {
             </div>
           </main>
         </section>
-      <Footer />
+        <Footer />
       </div>
   );
 }
