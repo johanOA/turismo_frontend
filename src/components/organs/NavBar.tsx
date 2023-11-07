@@ -57,7 +57,7 @@ const NavBar = () => {
                                         <NavLink to={"#"} className="relative inline-block overflow-hidden pt-2 pl-2 before:w-2 before:h-2 before:bg-color2 before:absolute before:top-2 before:-left-10 before:rounded-full before:transition-all before:duration-200 before:ease-in hover:before:left-0.5 after:w-0.5 after:h-3 after:bg-color2 after:absolute after:left-1 after:-top-10 hover:after:top-3.5 after:transition-all after:duration-200 after:ease-in">Bienvenido! {userInfo.username}</NavLink>
                                 </List>
                                 <List className="w-full" >
-                                        <Button onClick={() => navigate("/admin")} type="button" className={"before:bottom-0 border-b-2 border-transparent hover:border-gray-950 py-2 px-8 relative z-10 before:content-[''] before:absolute before:left-0 before:w-full before:h-0 before:bg-color2 before:-z-10 hover:before:h-full before:transition-all before:duration-300 before:ease-in text-base"}>Acceder al panel</Button>
+                                        <Button onClick={() => navigate("/panel/dashboard")} type="button" className={"before:bottom-0 border-b-2 border-transparent hover:border-gray-950 py-2 px-8 relative z-10 before:content-[''] before:absolute before:left-0 before:w-full before:h-0 before:bg-color2 before:-z-10 hover:before:h-full before:transition-all before:duration-300 before:ease-in text-base"}>Acceder al panel</Button>
                                 </List>
                                 </>
                                 :
