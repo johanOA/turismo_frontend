@@ -9,9 +9,12 @@ import Dashboard from './components/pages/panel/Dashboard.tsx';
 import Profile from './components/pages/panel/Profile.tsx';
 import Users from './components/pages/panel/admin/users/Users.tsx';
 import UserSettings from './components/pages/panel/admin/users/UserSettings.tsx';
-import SignUp from './components/pages/SingUp.tsx'
- import { AuthProvider } from './Auth/AuthProvider.tsx';
- import { ProSidebarProvider } from "react-pro-sidebar";
+import SignUp from './components/pages/SingUp.tsx';
+import Entrepreneurship from './components/pages/Entrepreneurship.tsx';
+import Blogs from './components/pages/Blogs.tsx';
+import TouristRoutes from './components/pages/TouristRoutes.tsx';
+import { AuthProvider } from './Auth/AuthProvider.tsx';
+import { ProSidebarProvider } from "react-pro-sidebar";
 
 const router = createBrowserRouter([
   {
@@ -52,15 +55,27 @@ const router = createBrowserRouter([
         ],
       },
     ]
-  }
+  },
+  {
+    path: "/Entrepreneurship",
+    element: <Entrepreneurship/>
+  },
+  {
+    path: "/Blogs",
+    element: <Blogs/>
+  },
+  {
+    path: "/TouristRoutes",
+    element: <TouristRoutes/>
+  },
 ])
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <AuthProvider> 
-    <ProSidebarProvider>
-      <RouterProvider router={router} />
+      <ProSidebarProvider>
+        <RouterProvider router={router} />
       </ProSidebarProvider>
-     </AuthProvider>
+    </AuthProvider>
   </React.StrictMode>,
 )

@@ -8,8 +8,6 @@ import {User, Envelope, MapPinLine, IdentificationCard, Phone, Key, Buildings} f
 
 import './../Styles/Register.css';
 
-
-
 function RegistroComponent() {
   const [userInfo, setUserInfo] = useState({
     email: '',
@@ -95,7 +93,7 @@ function RegistroComponent() {
   };
 
   return (
-    <div className="container">
+    <div className="container-register">
       <NavBar />
       <div className='container-internal'>
         <div className="forms-container">
@@ -277,7 +275,7 @@ function RegistroComponent() {
               <div className='container-buton'>
                 <button
                   type="submit"
-                  className="btn"
+                  className="btn_register"
                   disabled={
                     !isPasswordsMatch ||
                     // Puedes agregar más validaciones según las necesidades.
@@ -292,8 +290,8 @@ function RegistroComponent() {
             </form>
           ) : (
             <div className='container-buton'>
-              <button onClick={showFieldsForUser} className="btn">Registro para Usuarios</button>
-              <button onClick={showFieldsForCompany} className="btn">Registro para Empresas</button>
+              <button onClick={showFieldsForUser} className="btn_register">Registro para Usuarios</button>
+              <button onClick={showFieldsForCompany} className="btn_register">Registro para Empresas</button>
             </div>
           )}
         </div>

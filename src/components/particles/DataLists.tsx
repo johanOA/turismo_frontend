@@ -5,15 +5,15 @@ export const NavLinks = [
     },
     {
         name: "Emprendimientos",
-        url: "/"
+        url: "/Entrepreneurship"
     },
     {
         name: "Blogs",
-        url: "/"
+        url: "/Blogs"
     },
     {
         name: "Rutas Turísticas",
-        url: "/"
+        url: "/TouristRoutes"
     },
 
 ];
@@ -25,12 +25,24 @@ export const GlobalLinks = [
     },
     {
         name: "Ingresar",
-        url: "login"
+        url: "/login"
     },
     {
         name: "Registrarse",
-        url: "signup"
-    }
+        url: "/signup"
+    },
+    {
+        name: "Emprendimientos",
+        url: "/Entrepreneurship",
+    },
+    {
+        name: "Blogs",
+        url: "/Blogs",
+    },
+    {
+        name: "Rutas Turísticas",
+        url: "/TouristRoutes",
+    },
 ];
 export const NavButtons = [
     {

@@ -1,13 +1,20 @@
 /* Estilo base */
-
+:root {
+  --main-color: #f28e13;
+  --secondary-color: #e66807;
+  --grey-light: #d0d0d0;
+  --grey-medium: #8e8e8e;
+  --grey-dark: #333;
+  --error-color: var(--main-color);
+  --transition-speed: 0.3s;
+}
 
 /* Contenedor principal para centrar el contenido */
-.container {
+.container-register {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
   background-color: #f0f0f0;
 }
 
@@ -97,7 +104,7 @@
 }
 
 /*botones del registro */ 
-.btn {
+.btn_register {
   margin-left: 15px; /*Espacio entre los botones */
   padding: 12px 24px; /* Espacio entre los margenes del contenedor */
   background: linear-gradient(to right, var(--main-color), var(--secondary-color)); /* Color de los botones, degradado*/ 
@@ -109,7 +116,7 @@
 }
 
 /*Transiciones y acciones de los botones cuando el cursor pasa o da click en ellos */
-.btn:hover {
+.btn_register:hover {
   transform: scale(1.05); /* Aumenta el tamaño de los botones*/
   background: linear-gradient(to right, var(--secondary-color), var(--main-color)); /*Invierte el degradado */
 }
