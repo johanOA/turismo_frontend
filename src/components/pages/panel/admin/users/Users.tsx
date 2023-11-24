@@ -18,10 +18,17 @@ import Tooltip from '@mui/material/Tooltip';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import DeleteIcon from '@mui/icons-material/Delete';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import TextField from '@mui/material/TextField';
+
 
 interface Data {
   id: number;
@@ -256,47 +263,37 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 
 interface EnhancedTableToolbarProps {
   numSelected: number;
+  onDeleteClick: () => void;
+  onEditClick: () => void;
 }
 
 function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
-  const { numSelected } = props;
+  const { numSelected, onDeleteClick, onEditClick } = props;
 
   return (
-    <Toolbar
-      sx={{
-        pl: { sm: 2 },
-        pr: { xs: 1, sm: 1 },
-        ...(numSelected > 0 && {
-          bgcolor: (theme) =>
-            alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
-        }),
-      }}
-    >
+    <Toolbar>
       {numSelected > 0 ? (
-        <Typography
-          sx={{ flex: '1 1 100%' }}
-          color="inherit"
-          variant="subtitle1"
-          component="div"
-        >
+        <Typography variant="subtitle1" component="div">
           {numSelected} selected
         </Typography>
       ) : (
-        <Typography
-          sx={{ flex: '1 1 100%' }}
-          variant="h6"
-          id="tableTitle"
-          component="div"
-        >
+        <Typography variant="h6" id="tableTitle" component="div">
           Users
         </Typography>
       )}
       {numSelected > 0 ? (
-        <Tooltip title="Delete">
-          <IconButton>
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
+        <>
+          <Tooltip title="Delete">
+            <IconButton onClick={onDeleteClick}>
+              <DeleteIcon />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Edit">
+            <IconButton onClick={onEditClick}>
+              <ModeEditIcon/>
+            </IconButton>
+          </Tooltip>
+        </>
       ) : (
         <Tooltip title="Filter list">
           <IconButton>
@@ -312,8 +309,19 @@ export default function EnhancedTable() {
   const [orderBy, setOrderBy] = React.useState<keyof Data>('id');
   const [selected, setSelected] = React.useState<readonly number[]>([]);
   const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+  const [selectedUser, setSelectedUser] = React.useState<Data | null>(null);
+  const [openEditModal, setOpenEditModal] = React.useState(false);
+
+
+  const [openModal, setOpenModal] = React.useState(false);
+  const [newUserData, setNewUserData] = React.useState({
+    nombre: '',
+    correo: '',
+    activo: '',
+    rol: '',
+  });
 
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
@@ -334,6 +342,9 @@ export default function EnhancedTable() {
   };
 
   const handleClick = (event: React.MouseEvent<unknown>, id: number) => {
+    const selectedUser = rows.find((user) => user.id === id);
+    setSelectedUser(selectedUser || null);
+    
     const selectedIndex = selected.indexOf(id);
     let newSelected: readonly number[] = [];
 
@@ -352,6 +363,8 @@ export default function EnhancedTable() {
     setSelected(newSelected);
   };
 
+
+  
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };
@@ -361,9 +374,21 @@ export default function EnhancedTable() {
     setPage(0);
   };
 
-  const handleChangeDense = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDense(event.target.checked);
+  const handleDeleteClick = () => {
+    // Implementar la lógica para eliminar los usuarios seleccionados
+    setSelected([]); // Limpia la selección después de eliminar
   };
+
+  const handleEditClick = () => {
+    // Abre el modal de edición para el primer usuario seleccionado
+    const firstSelectedUserId = selected[0];
+    const selectedUser = rows.find((user) => user.id === firstSelectedUserId);
+    if (selectedUser) {
+      setSelectedUser(selectedUser);
+      setOpenEditModal(true);
+    }
+  };
+
 
   const isSelected = (id: number) => selected.indexOf(id) !== -1;
 
@@ -380,15 +405,42 @@ export default function EnhancedTable() {
     [order, orderBy, page, rowsPerPage],
   );
 
+  const handleCreateUser = () => {
+    // Agregar lógica para crear el usuario 
+
+    setOpenModal(false);
+
+  };
+
+  const handleUpdateUser = () => {
+    // Agregar lógica para actualizar el usuario 
+    setOpenEditModal(false);
+  };
+  
+
+  const handleEditFieldChange = (field: keyof Data, value: string | boolean) => {
+    if (selectedUser) {
+      setSelectedUser({
+        ...selectedUser,
+        [field]: value,
+      });
+    }
+  };
+  
+  
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar 
+          numSelected={selected.length}
+          onDeleteClick={handleDeleteClick}
+          onEditClick={handleEditClick}
+        />
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
             aria-labelledby="tableTitle"
-            size={dense ? 'small' : 'medium'}
+           
           >
             <EnhancedTableHead
               numSelected={selected.length}
@@ -440,9 +492,7 @@ export default function EnhancedTable() {
               })}
               {emptyRows > 0 && (
                 <TableRow
-                  style={{
-                    height: (dense ? 33 : 53) * emptyRows,
-                  }}
+
                 >
                   <TableCell colSpan={6} />
                 </TableRow>
@@ -460,14 +510,95 @@ export default function EnhancedTable() {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-      <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding"
-      />
+      
       <Stack direction="row" spacing={2}>
-        <Button variant="outlined">Crear</Button>
-        <Button variant="outlined"> Actualizar </Button>
+        <Button variant="outlined" onClick={() => setOpenModal(true)}>
+          Crear
+        </Button>
       </Stack>
+      <Dialog open={openModal} onClose={() => setOpenModal(false)}>
+          <DialogTitle>Crear Nuevo Usuario</DialogTitle>
+          <DialogContent>
+            <TextField
+              label="Nombre"
+              value={newUserData.nombre}
+              onChange={(e) => setNewUserData({ ...newUserData, nombre: e.target.value })}
+              fullWidth
+              margin="normal"
+            />
+            <TextField
+              label="Correo electrónico"
+              value={newUserData.correo}
+              onChange={(e) => setNewUserData({ ...newUserData, correo: e.target.value })}
+              fullWidth
+              margin="normal"
+            />
+            <TextField
+              label="¿Activo?"
+              value={newUserData.activo}
+              onChange={(e) => setNewUserData({ ...newUserData, activo: e.target.value })}
+              fullWidth
+              margin="normal"
+            />
+            <TextField
+              label="Rol"
+              value={newUserData.rol}
+              onChange={(e) => setNewUserData({ ...newUserData, rol: e.target.value })}
+              fullWidth
+              margin="normal"
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setOpenModal(false)}>Cancelar</Button>
+            <Button onClick={handleCreateUser} color="primary">
+              Crear Usuario
+            </Button>
+          </DialogActions>
+        </Dialog>
+        <Dialog open={openEditModal} onClose={() => setOpenEditModal(false)}>
+        <DialogTitle>Actualizar Usuario</DialogTitle>
+        <DialogContent>
+          {selectedUser && (
+            <>
+              <TextField
+                label="Nombre"
+                value={selectedUser.nombre}
+                onChange={(e) => handleEditFieldChange('nombre', e.target.value)}
+                fullWidth
+                margin="normal"
+              />
+              <TextField
+                label="Correo electronico"
+                value={selectedUser.correo}
+                onChange={(e) => handleEditFieldChange('correo', e.target.value)}
+                fullWidth
+                margin="normal"
+              />
+              <TextField
+                label="Activo"
+                value={selectedUser.activo}
+                onChange={(e) => handleEditFieldChange('activo', e.target.value)}
+                fullWidth
+                margin="normal"
+              />
+              <TextField
+                label="Rol"
+                value={selectedUser.rol}
+                onChange={(e) => handleEditFieldChange('rol', e.target.value)}
+                fullWidth
+                margin="normal"
+              />
+              
+            </>
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpenEditModal(false)}>Cancelar</Button>
+          <Button onClick={handleUpdateUser} color="primary">
+            Actualizar Usuario
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 }
