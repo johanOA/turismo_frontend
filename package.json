@@ -14,7 +14,7 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.16",
     "@mui/material": "^5.14.17",
-    "@phosphor-icons/react": "^2.0.10",
+    "@phosphor-icons/react": "^2.0.14",
     "@tanstack/react-table": "^8.10.7",
     "axios": "1.5.1",
     "react": "^18.2.0",

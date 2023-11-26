@@ -35,7 +35,7 @@ export default function Blogs() {
             imageUrl: "/src/assets/food-blog.png",
             author: "Carlos Rodríguez",
             date: "20 de Octubre, 2023",
-            category: "Tips de viaje",
+            category: "Tips de Viaje",
             categoryColor: "bg-red-200 text-red-800"
         },
         // ... más blogs

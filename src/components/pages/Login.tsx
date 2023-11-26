@@ -9,6 +9,8 @@ import { Image } from "../atoms/Image";
 import httpClient from "../../config/httpClient.js"; 
 import "../Styles/Login.css";
 import Popup from "../pages/utils/popup";
+import { useEffect } from "react"
+import { getUserToken, setUserToken } from "../../localStorage/localStorage.js";
 
 export default function Login() {
 
@@ -17,6 +19,13 @@ export default function Login() {
   const { isAuthenticated, setIsAuthenticated, userInfo,setUserInfo} = useAuth();
   const [showPopup, setShowPopup] = useState(false); // Nuevo estado para mostrar el popup
   const [popupMessage, setPopupMessage] = useState(""); // Mensaje de error del popup
+
+  useEffect(() => {
+    console.log("hola1");
+    setUserToken("un token");
+    console.log("after");
+    console.log(getUserToken());
+  }, []);
 
   if(isAuthenticated){
     return <Navigate to="/" />
@@ -36,6 +45,7 @@ export default function Login() {
                   username: responseUserInfo.username??"",
                 }
                 setIsAuthenticated(true);
+                useLocalStorage.setValue()
                 setUserInfo(newUserInfo);
                 console.log(userInfo);
             }else{
