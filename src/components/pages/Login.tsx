@@ -1,7 +1,6 @@
 import NavBar from "../organs/NavBar";
 import Footer from "../organs/Footer";
-import Image1 from "../../assets/HeroVector.png";
-import Image2 from "../../assets/imageLogo.png"
+import Image1 from "../../assets/Ilustracion.png";
 import { useState } from "react";
 import { useAuth } from "../../Auth/AuthProvider";
 import { Navigate } from "react-router-dom";
@@ -56,9 +55,8 @@ export default function Login() {
       <div className="login-container">
         <NavBar />
         <section className="login-section">
-          <div className="h-[60%] w-[80%] lg:h-[90vh] md:h-[50vh] lg:w-1/2 md:w-[55%] relative">
-              <Image className="h-full w-full object-cover" image={Image1} alt="Hero Background Vector" />
-              <Image className="top-image" image={Image2} alt="Login Template Image" />
+          <div className="background-image">
+            <Image className="h-full w-full object-cover" image={Image1} alt="Hero Background Vector" />
           </div>
           <main className="main">
             <div className="login-content">
