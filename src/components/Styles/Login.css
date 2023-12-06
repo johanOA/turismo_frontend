@@ -145,20 +145,7 @@
   padding: 0 10px;
   transition: box-shadow 0.3s; /* Agregar una transición para suavizar el efecto */
 }
-  @media (max-width: 576px) {
-    .form-group {
-      font-size: 14px;
-    }
-  }
-  
-  .login-input {
-    border: none;
-    border-bottom: 1px solid #962B09; /* Color de la línea */
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-  }
-  
+
 .edge-input-icon-login:active { 
   border-color: var(#f28e13);
   background: #fff;
