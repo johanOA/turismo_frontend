@@ -1,5 +1,3 @@
-import NavBar from "../organs/NavBar";
-import Footer from "../organs/Footer";
 import Image1 from "../../assets/HeroVector.png";
 import Image2 from "../../assets/imageLogo.png"
 import { useState } from "react";
@@ -11,6 +9,7 @@ import "../Styles/Login.css";
 import Popup from "../pages/utils/popup";
 import { useEffect } from "react"
 import { getUserToken, setUserToken } from "../../localStorage/localStorage.js";
+import {User, Key, EyeClosed, Eye} from '@phosphor-icons/react';
 
 export default function Login() {
 
@@ -18,6 +17,7 @@ export default function Login() {
   const [ password, setPassword ] = useState("");
   const { isAuthenticated, setIsAuthenticated, userInfo,setUserInfo} = useAuth();
   const [showPopup, setShowPopup] = useState(false); // Nuevo estado para mostrar el popup
+  const [showPassword, setShowPassword] = useState(false);
   const [popupMessage, setPopupMessage] = useState(""); // Mensaje de error del popup
 
   useEffect(() => {
@@ -62,9 +62,13 @@ export default function Login() {
     setShowPopup(false);
   }
 
+  const handleShowPasswordToggle = (event) => {
+    setShowPassword(!showPassword);
+    event.preventDefault();
+   };
+
   return (
       <div className="login-container">
-        <NavBar />
         <section className="login-section">
           <div className="h-[60%] w-[80%] lg:h-[90vh] md:h-[50vh] lg:w-1/2 md:w-[55%] relative">
               <Image className="h-full w-full object-cover" image={Image1} alt="Hero Background Vector" />
@@ -74,13 +78,38 @@ export default function Login() {
             <div className="login-content">
               <h1 className="login-title">Login</h1>
               <form className="login-form" onSubmit={handleSubmit}>
-                <div className="form-group">
-                  <input type="text" value={idNumber} onChange={(e) => setIdNumber (e.target.value )} className="login-input" placeholder="Numero de Identidad" />
+                <label className="label-login">Numero de Identidad</label>
+                <div className="input-field-login">
+                  <div className='edge-input-icon-login'>
+                    <User className="icons-login"></User>
+                    <input 
+                    type="text" 
+                    value={idNumber} 
+                    onChange={(e) => setIdNumber (e.target.value )} 
+                    className="login-input" 
+                    placeholder="Numero de Identidad" 
+                    />
+                  </div>
                 </div>
-                <div className="form-group">
-                  
-                  <label>Contraseña</label>
-                  <input type="password" value={password} onChange={(e) => setPassword (e.target.value)} className="login-input" placeholder="Ingresa tu contraseña" />
+                <label className="label-login">Contraseña</label>
+                <div className="input-field-login">
+                  <div className='edge-input-icon-login'>
+                    <Key className="icons-login"></Key>
+                    <input
+                      type={showPassword ? 'text' : 'password'}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="login-input"
+                      placeholder="Ingresa tu contraseña"
+                    />
+                    <button onClick={handleShowPasswordToggle}>
+                      {showPassword ?                     
+                        <EyeClosed className="icons-login"></EyeClosed>
+                        : 
+                        <Eye className="icons-login"></Eye>
+                        }
+                    </button>
+                  </div>
                   <a href="#" className="password-option">¿Olvidaste tu contraseña?</a>
                 </div>
                 <a className="login-button" onClick={handleSubmit}>Login</a>
@@ -99,7 +128,6 @@ export default function Login() {
             </div>
           </main>
         </section>
-        <Footer />
       </div>
   );
 }

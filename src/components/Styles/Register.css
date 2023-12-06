@@ -103,6 +103,40 @@
   text-align: center;
 }
 
+/*Contenedor para manejar el botón back */ 
+.container-buton-back {
+  padding: 10px;
+  display: flex;
+  text-align: center;
+}
+
+/*boton atras */ 
+.btn-register-back {
+  margin-left: 0px; /*Espacio entre los botones */
+  margin-right: 25%; /*Espacio entre los botones */
+  padding: 4px; /*Espacio entre los margenes del contenedor */
+  background: linear-gradient(to right, var(--main-color), var(--secondary-color)); /* Color de los botones, degradado*/ 
+  border-radius: 50%; /* Suaviza los bordes */
+  cursor: pointer; /*Cuando pasa el cursor muestra la manita para hacer click */
+  transition: all var(--transition-speed); /* Suaviza las transiciones, la velocidad se le da en la variable "transition-speen" declarada al inicio */
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+}
+
+/*Transiciones y acciones de los botones cuando el cursor pasa o da click en ellos */
+.btn-register-back:hover {
+  transform: scale(1.05); /* Aumenta el tamaño de los botones*/
+  background: linear-gradient(to right, var(--secondary-color), var(--main-color)); /*Invierte el degradado */
+}
+
+.icons-register-back{
+  width: 25px;
+  height: 50px;
+  color: var(black);
+}
+
 /*botones del registro */ 
 .btn_register {
   margin-left: 15px; /*Espacio entre los botones */

@@ -1,11 +1,5 @@
 import React, { useState } from 'react';
-import NavBar from "../organs/NavBar";
-import Footer from "../organs/Footer";
-import {User, Envelope, MapPinLine, IdentificationCard, Phone, Key, Buildings} from '@phosphor-icons/react';
-// import Image1 from "../../assets/HeroVector.png";
-// import Image2 from "../../assets/imageLogo.png"
-// import { Image } from "../atoms/Image";
-
+import {User, Envelope, MapPinLine, IdentificationCard, Phone, Key, Buildings, EyeClosed, Eye, ArrowArcLeft} from '@phosphor-icons/react';
 import './../Styles/Register.css';
 
 function RegistroComponent() {
@@ -35,6 +29,7 @@ function RegistroComponent() {
   const [showFields, setShowFields] = useState(false);
   const [showUserPanel, setShowUserPanel] = useState(false);
   const [showExplanation, setShowExplanation] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleRegistro = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -86,20 +81,27 @@ function RegistroComponent() {
     setShowExplanation(false);
   };
 
-  const showSelectionButtons = () => {
+  const handleShowPasswordToggle = (event) => {
+    setShowPassword(!showPassword);
+    event.preventDefault();
+   };
+
+   const showSelection = () => {
     setShowFields(false);
-    setShowUserPanel(false);
     setShowExplanation(true);
   };
 
   return (
-    <div className="container-register">
-      <NavBar />
       <div className='container-internal'>
         <div className="forms-container">
-          <h2 className="title">Registro</h2>
           {showFields ? (
             <form onSubmit={handleRegistro}>
+              <div className='container-buton-back flex'>
+                <button type="button" onClick={showSelection} className="btn-register-back">
+                  <ArrowArcLeft className="icons-register-back"></ArrowArcLeft>
+                </button>
+                <label className='title'>Registro</label>
+              </div>
               {/* Campos para userInfo */}
               <div className="input-field">
                 <div className='edge-input-icon'>
@@ -198,7 +200,7 @@ function RegistroComponent() {
                   <Key className="icons-register"></Key>
                   <input
                     className='input-register'
-                    type="password"
+                    type={showPassword ? 'text' : 'password'}
                     id="password"
                     name="password"
                     placeholder="Contraseña"
@@ -207,6 +209,13 @@ function RegistroComponent() {
                     minLength={8}
                     required
                   />
+                  <button onClick={handleShowPasswordToggle}>
+                    {showPassword ?                     
+                      <EyeClosed className="icons-login"></EyeClosed>
+                        : 
+                      <Eye className="icons-login"></Eye>
+                    }
+                  </button>
                 </div>
               </div>
               <div className="input-field">
@@ -214,7 +223,7 @@ function RegistroComponent() {
                   <Key className="icons-register"></Key>
                   <input
                     className='input-register'
-                    type="password"
+                    type={showPassword ? 'text' : 'password'}
                     id="passwordConfirmation"
                     name="passwordConfirmation"
                     placeholder="Confirma tu Contraseña"
@@ -223,6 +232,7 @@ function RegistroComponent() {
                     minLength={8}
                     required
                   />
+                  <button onClick={handleShowPasswordToggle}></button>
                 </div>
               </div>
               {/* Campos para microSite */}
@@ -291,13 +301,11 @@ function RegistroComponent() {
           ) : (
             <div className='container-buton'>
               <button onClick={showFieldsForUser} className="btn_register">Registro para Usuarios</button>
-              <button onClick={showFieldsForCompany} className="btn_register">Registro para Empresas</button>
+              <button onClick={showFieldsForCompany} className="btn_register">Registro de Emprendimientos</button>
             </div>
           )}
         </div>
       </div>
-      <Footer />
-    </div>
   );
 }
 export default RegistroComponent;

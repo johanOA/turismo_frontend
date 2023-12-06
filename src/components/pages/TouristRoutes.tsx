@@ -1,6 +1,4 @@
-import NavBar from "../organs/NavBar";
-import Footer from "../organs/Footer";
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './../Styles/PagesTailwinds.css';
 
 export default function TouristRoutes() {
@@ -63,8 +61,6 @@ export default function TouristRoutes() {
     };
 
     return (
-        <div className="container-pages bg-gray-100">
-            <NavBar />
             <div className='container-internal-pages p-4 md:p-12 '>
                 <div className="mb-8 flex justify-between w-full border-b border-black-500">
                     <input
@@ -113,7 +109,5 @@ export default function TouristRoutes() {
                     </div>
                 </div>
             </div>
-            <Footer />
-        </div>
     );
 }

@@ -99,34 +99,49 @@
       font-size: 14px;
     }
   }
-  
+.label-login {
+  font-size: 15px;
+  color: rgb(70, 69, 69);
+}
 .login-form {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
-  
-.form-group {
+.edge-input-icon-login{
+  border-top: 1px solid #d0d0d0;
+  border-bottom: 1px solid #f28e13;
+  border-radius: 28px;
   display: flex;
-  flex-direction: column;
-  font-size: 17px;
-  font-family: 'Poppins', sans-serif;
-  padding: 8px;
+  justify-content: flex-start;
+  padding: 0 10px;
+  transition: box-shadow 0.3s; /* Agregar una transición para suavizar el efecto */
 }
-  @media (max-width: 576px) {
-    .form-group {
-      font-size: 14px;
-    }
-  }
-  
-  .login-input {
-    border: none;
-    border-bottom: 1px solid #f28e13; /* Color de la línea */
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
 
-  }
+.edge-input-icon-login:active { 
+  border-color: var(#f28e13);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(242, 142, 19, 0.2); /* Aplicar box-shadow cuando está enfocado */
+  transition: box-shadow 0.3s; /* Agregar una transición para suavizar el efecto */
+}
+  
+/* Campos de información */
+.input-field-login {
+  margin-bottom: 15px;
+}
+
+.login-input {
+    width: 100%;
+    padding: 9px 9px;
+    font-size: 16px;
+    outline: none; /*Quita la seleccion del campo negro */
+}
+
+.icons-login{
+  width: 25px;
+  height: 45px;
+  color: var(--grey-medium);
+}
   
 .password-option{
   padding: 10px;

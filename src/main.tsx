@@ -4,7 +4,6 @@ import App from './App'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from './components/pages/Login.tsx';
-import Panel from './components/pages/panel/Panel.tsx';
 import Dashboard from './components/pages/panel/Dashboard.tsx';
 import Profile from './components/pages/panel/Profile.tsx';
 import Users from './components/pages/panel/admin/users/Users.tsx';
@@ -15,23 +14,38 @@ import Blogs from './components/pages/Blogs.tsx';
 import TouristRoutes from './components/pages/TouristRoutes.tsx';
 import { AuthProvider } from './Auth/AuthProvider.tsx';
 import { ProSidebarProvider } from "react-pro-sidebar";
+import ProtectedRoutes from './ProtectedRoutes/ProtectedRoutes.tsx'
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />
-  },
-  {
-    path: "/login",
-    element: <Login />
-  },
-  {
-    path: "/signup",
-    element: <SignUp/>
+    element: <App />,
+    children: [
+      {
+        path: "/login",
+        element: <Login />
+      },
+      {
+        path: "/signup",
+        element: <SignUp/>
+      },
+      {
+        path: "/Entrepreneurship",
+        element: <Entrepreneurship/>
+      },
+      {
+        path: "/Blogs",
+        element: <Blogs/>
+      },
+      {
+        path: "/TouristRoutes",
+        element: <TouristRoutes/>
+      },
+    ]
   },
   {
     path: "/panel",
-    element: <Panel/>,
+    element: <ProtectedRoutes/>,
     children: [
       {
         path: "dashboard",
@@ -55,18 +69,6 @@ const router = createBrowserRouter([
         ],
       },
     ]
-  },
-  {
-    path: "/Entrepreneurship",
-    element: <Entrepreneurship/>
-  },
-  {
-    path: "/Blogs",
-    element: <Blogs/>
-  },
-  {
-    path: "/TouristRoutes",
-    element: <TouristRoutes/>
   },
 ])
 
