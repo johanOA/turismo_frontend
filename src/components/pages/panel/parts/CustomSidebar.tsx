@@ -45,8 +45,8 @@ const CustomSidebar = () => {
             <MenuItem rootStyles={{backgroundColor:Colors.primarySoft}} icon={<Gear/>} onClick={() => navigate("/panel/admin/userSettings")} > Ajustes </MenuItem>
         </SubMenu>
         <SubMenu rootStyles={{backgroundColor:Colors.primarySoft}} icon={<Desktop/>}label="Micrositios">
-            <MenuItem rootStyles={{backgroundColor:Colors.primarySoft}} icon={<List/>}>  Lista </MenuItem>
-            <MenuItem rootStyles={{backgroundColor:Colors.primarySoft}} icon={<ArchiveBox/>}> Solicitudes </MenuItem>
+            <MenuItem rootStyles={{backgroundColor:Colors.primarySoft}} icon={<List/>} >  Lista </MenuItem>
+            <MenuItem rootStyles={{backgroundColor:Colors.primarySoft}} icon={<ArchiveBox/>} onClick={() => navigate("/panel/admin/MicroSites")}> Solicitudes </MenuItem>
             <MenuItem rootStyles={{backgroundColor:Colors.primarySoft}} icon={<Gear/>}> Ajustes </MenuItem>
         </SubMenu>
         <SubMenu rootStyles={{backgroundColor:Colors.primarySoft}} icon={<MapPin/>} label="Rutas turísticas">

@@ -1,31 +1,35 @@
-// import { Image } from "../atoms/Image"
-// import bgImage from "../../assets/HeroVector.png"
-// import heroImage from "../../assets/hero-img.png"
-// import { Text } from "../atoms/Text"
-// import { HeroTexts } from "../particles/DataLists"
-// import { Button } from "../atoms/Button"
-// import { Play } from "@phosphor-icons/react"
-// import { Fade, Slide } from "react-awesome-reveal"
+import React, { useEffect, useRef  } from 'react';
 import "../Styles/PrincipalPage.css";
+import CarouselItem from "./CarouselItem";
 
 const HeroSection = () => {
         
-    const nextDom: HTMLElement | null = document.getElementById('next-hs');
-    const prevDom: HTMLElement | null = document.getElementById('prev-hs');
-    const carouselDom: HTMLElement | null = document.querySelector('.carousel-hs');
-    const listItemDom: HTMLElement | null = document.querySelector('.carousel-hs .list-hs');
-    const thumbnailDom: HTMLElement | null = document.querySelector('.carousel-hs .thumbnail-hs');
+    const carouselDomRef = useRef<HTMLElement | null>(null);
+    const listItemDomRef = useRef<HTMLElement | null>(null);
+    const thumbnailDomRef = useRef<HTMLElement | null>(null);
 
-    if (nextDom) {
-        nextDom.onclick = function () {
-            showSlider('next-hs');
-        };
-    }
-    if(prevDom) {
-        prevDom.onclick = function () {
-            showSlider('prev-hs');
-        };
-    }
+    useEffect(() => {
+        const nextDom = document.getElementById('next-hs');
+        const prevDom = document.getElementById('prev-hs');
+
+        const carousel = document.querySelector('.carousel-hs');
+        const list = document.querySelector('.carousel-hs .list-hs');
+        const thumbnail = document.querySelector('.carousel-hs .thumbnail-hs');
+
+        if (nextDom && prevDom && carousel && list && thumbnail) {
+            carouselDomRef.current = carousel as HTMLElement;
+            listItemDomRef.current = list as HTMLElement;
+            thumbnailDomRef.current = thumbnail as HTMLElement;
+
+            nextDom.addEventListener('click', () => showSlider('next-hs'));
+            prevDom.addEventListener('click', () => showSlider('prev-hs'));
+
+            return () => {
+                nextDom.removeEventListener('click', () => showSlider('next-hs'));
+                prevDom.removeEventListener('click', () => showSlider('prev-hs'));
+            };
+        }
+    }, []); // Se ejecuta solo una vez después del montaje
 
     const timeRunning = 3000;
     let runTimeOut: number;
@@ -34,45 +38,45 @@ const HeroSection = () => {
         const itemSlider = document.querySelector('.carousel-hs .list-hs');
         const itemThumbnail = document.querySelector('.carousel-hs .thumbnail-hs');
 
-        if (type === 'next-hs') {
+        if (type === 'next-hs' && carouselDomRef.current && listItemDomRef.current && thumbnailDomRef.current) {
             const firstClone = itemSlider?.firstElementChild?.cloneNode(true);
             const firstThumbnailClone = itemThumbnail?.firstElementChild?.cloneNode(true);
 
             if (firstClone && firstThumbnailClone) {
-                listItemDom?.appendChild(firstClone);
-                thumbnailDom?.appendChild(firstThumbnailClone);
+                listItemDomRef.current.appendChild(firstClone);
+                thumbnailDomRef.current.appendChild(firstThumbnailClone);
 
                 const firstElementChildSlider = itemSlider?.firstElementChild;
-            if (firstElementChildSlider) {
-                listItemDom?.removeChild(firstElementChildSlider);
-            }
+                if (firstElementChildSlider) {
+                    listItemDomRef.current.removeChild(firstElementChildSlider);
+                }
 
-            const firstElementChildThumbnail = itemThumbnail?.firstElementChild;
-            if (firstElementChildThumbnail) {
-                thumbnailDom?.removeChild(firstElementChildThumbnail);
-            }
+                const firstElementChildThumbnail = itemThumbnail?.firstElementChild;
+                if (firstElementChildThumbnail) {
+                    thumbnailDomRef.current.removeChild(firstElementChildThumbnail);
+                }
 
-                carouselDom?.classList.add('next-hs');
+                carouselDomRef.current.classList.add('next-hs');
 
                 setTimeout(() => {
-                    carouselDom?.classList.remove('next-hs');
+                    carouselDomRef.current.classList.remove('next-hs');
                 }, 500); // Ajusta el tiempo según la duración de la animación
             }
-        } else {
+        } else if (type === 'prev-hs' && carouselDomRef.current && listItemDomRef.current && thumbnailDomRef.current) {
             const lastClone = itemSlider?.lastElementChild?.cloneNode(true);
             const lastThumbnailClone = itemThumbnail?.lastElementChild?.cloneNode(true);
 
             if (lastClone && lastThumbnailClone) {
-                listItemDom?.prepend(lastClone);
-                thumbnailDom?.prepend(lastThumbnailClone);
+                listItemDomRef.current.prepend(lastClone);
+                thumbnailDomRef.current.prepend(lastThumbnailClone);
 
-                listItemDom?.removeChild(itemSlider?.lastElementChild as Node) ;
-                thumbnailDom?.removeChild(itemThumbnail?.lastElementChild as Node);
+                listItemDomRef.current.removeChild(itemSlider?.lastElementChild as Node);
+                thumbnailDomRef.current.removeChild(itemThumbnail?.lastElementChild as Node);
 
-                carouselDom?.classList.add('prev-hs');
+                carouselDomRef.current.classList.add('prev-hs');
 
                 setTimeout(() => {
-                    carouselDom?.classList.remove('prev-hs');
+                    carouselDomRef.current.classList.remove('prev-hs');
                 }, 500); // Ajusta el tiempo según la duración de la animación
             }
         }
@@ -96,66 +100,34 @@ const HeroSection = () => {
             <div className="carousel-hs">
                 {/* list item */}
                 <div className="list-hs">
-                    <div className="item-hs">
-                        <img src="/src/assets/PrincipalPage1.jpg"/>
-                        <div className="content-hs">
-                            <div className="author-hs">AUTOR</div>
-                            <div className="title-hs">TITULO</div>
-                            <div className="topic-hs">GENOVA</div>
-                            <div className="des-hs">
-                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Corrupti, cum quis dolorem autem necessitatibus doloremque, consequuntur eius illum harum ab doloribus. Ex perferendis nobis, repellat voluptatibus dicta officiis et eligendi.
-                            </div>
-                            <div className="buttons-hs">
-                                <button>VER MAS</button>
-                                <button>ACERCA DE</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="item-hs">
-                        <img src="/src/assets/PrincipalPage2.jpg"/>
-                        <div className="content-hs">
-                            <div className="author-hs">AUTOR</div>
-                            <div className="title-hs">TITULO</div>
-                            <div className="topic-hs">GENOVA</div>
-                            <div className="des-hs">
-                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Corrupti, cum quis dolorem autem necessitatibus doloremque, consequuntur eius illum harum ab doloribus. Ex perferendis nobis, repellat voluptatibus dicta officiis et eligendi.
-                            </div>
-                            <div className="buttons-hs">
-                                <button>VER MAS</button>
-                                <button>ACERCA DE</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="item-hs">
-                        <img src="/src/assets/PrincipalPage3.jpg"/>
-                        <div className="content-hs">
-                            <div className="author-hs">AUTOR</div>
-                            <div className="title-hs">TITULO</div>
-                            <div className="topic-hs">GENOVA</div>
-                            <div className="des-hs">
-                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Corrupti, cum quis dolorem autem necessitatibus doloremque, consequuntur eius illum harum ab doloribus. Ex perferendis nobis, repellat voluptatibus dicta officiis et eligendi.
-                            </div>
-                            <div className="buttons-hs">
-                                <button>VER MAS</button>
-                                <button>ACERCA DE</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="item-hs">
-                        <img src="/src/assets/PrincipalPage4.jpg"/>
-                        <div className="content-hs">
-                            <div className="author-hs">AUTOR</div>
-                            <div className="title-hs">TITULO</div>
-                            <div className="topic-hs">GENOVA</div>
-                            <div className="des-hs">
-                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Corrupti, cum quis dolorem autem necessitatibus doloremque, consequuntur eius illum harum ab doloribus. Ex perferendis nobis, repellat voluptatibus dicta officiis et eligendi.
-                            </div>
-                            <div className="buttons-hs">
-                                <button>VER MAS</button>
-                                <button>ACERCA DE</button>
-                            </div>
-                        </div>
-                    </div>
+                    <CarouselItem
+                        imageSrc="/src/assets/PrincipalPage1.jpg"
+                        author="Las"
+                        title="Hermosas vistas"
+                        topic="De Génova"
+                        description="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptates quibusdam molestias obcaecati? Eaque modi et hic libero repellendus animi, atque, debitis impedit autem voluptas ex provident voluptatum, voluptate at porro."
+                    />
+                    <CarouselItem 
+                        imageSrc="/src/assets/PrincipalPage2.jpg"
+                        author="Las"
+                        title="Hermosas vistas"
+                        topic="De Génova"
+                        description="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptates quibusdam molestias obcaecati? Eaque modi et hic libero repellendus animi, atque, debitis impedit autem voluptas ex provident voluptatum, voluptate at porro."
+                    />
+                    <CarouselItem 
+                        imageSrc="/src/assets/PrincipalPage3.jpg"
+                        author="Las"
+                        title="Hermosas vistas"
+                        topic="De Génova"
+                        description="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptates quibusdam molestias obcaecati? Eaque modi et hic libero repellendus animi, atque, debitis impedit autem voluptas ex provident voluptatum, voluptate at porro."
+                    />
+                    <CarouselItem 
+                        imageSrc="/src/assets/PrincipalPage4.jpg"
+                        author="Las"
+                        title="Hermosas vistas"
+                        topic="De Génova"
+                        description="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptates quibusdam molestias obcaecati? Eaque modi et hic libero repellendus animi, atque, debitis impedit autem voluptas ex provident voluptatum, voluptate at porro."
+                    />
                 </div>
                 {/* Thumbnail */}
                 <div className="thumbnail-hs">
