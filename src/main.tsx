@@ -8,6 +8,7 @@ import Panel from './components/pages/panel/Panel.tsx';
 import Dashboard from './components/pages/panel/Dashboard.tsx';
 import Profile from './components/pages/panel/Profile.tsx';
 import Users from './components/pages/panel/admin/users/Users.tsx';
+import MicroSites from './components/pages/panel/admin/MicroSites/MicroSite.tsx'
 import UserSettings from './components/pages/panel/admin/users/UserSettings.tsx';
 import SignUp from './components/pages/SingUp.tsx';
 import Entrepreneurship from './components/pages/Entrepreneurship.tsx';
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
         {
           path: "userSettings",
           element: <UserSettings />
+        },
+        {
+          path: "microSites",
+          element: <MicroSites />
         },
         ],
       },
