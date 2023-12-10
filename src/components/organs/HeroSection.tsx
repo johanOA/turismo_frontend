@@ -9,7 +9,6 @@
 import "../Styles/PrincipalPage.css";
 
 const HeroSection = () => {
-        
     const nextDom: HTMLElement | null = document.getElementById('next-hs');
     const prevDom: HTMLElement | null = document.getElementById('prev-hs');
     const carouselDom: HTMLElement | null = document.querySelector('.carousel-hs');

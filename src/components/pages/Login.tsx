@@ -1,52 +1,34 @@
 import Image1 from "../../assets/Ilustracion.png";
 import { useState } from "react";
-import { useAuth } from "../../Auth/AuthProvider";
 import { Navigate } from "react-router-dom";
 import { Image } from "../atoms/Image";
 import httpClient from "../../config/httpClient.js"; 
 import "../Styles/Login.css";
 import Popup from "../pages/utils/popup";
-import { useEffect } from "react"
-import { getUserToken, setUserToken } from "../../localStorage/localStorage.js";
+import { getUserToken, setUserToken, setUserInfo } from "../../localStorage/localStorage.js";
 import {User, Key, EyeClosed, Eye} from '@phosphor-icons/react';
 
 export default function Login() {
 
   const [ idNumber, setIdNumber ] = useState("");
   const [ password, setPassword ] = useState("");
-  const { isAuthenticated, setIsAuthenticated, userInfo,setUserInfo} = useAuth();
   const [showPopup, setShowPopup] = useState(false); // Nuevo estado para mostrar el popup
   const [showPassword, setShowPassword] = useState(false);
   const [popupMessage, setPopupMessage] = useState(""); // Mensaje de error del popup
 
-  useEffect(() => {
-    console.log("hola1");
-    setUserToken("un token");
-    console.log("after");
-    console.log(getUserToken());
-  }, []);
-
-  if(isAuthenticated){
+  if(getUserToken){
     return <Navigate to="/" />
   }
 
   const handleSubmit  = ()  => {
 	httpClient.post("auth/login", {idNumber:idNumber,password:password})
       .then((response) => {
-        // Manejar la respuesta de la solicitud
         if(response.data.success)
             {
-              let responseUserInfo = response.data.data;
-              var  newUserInfo = {
-                  accessCode: responseUserInfo.accessCode??"2",
-                  accessDescription: responseUserInfo.accessDescription??"",
-                  email: responseUserInfo.email??"",
-                  username: responseUserInfo.username??"",
-                }
-                setIsAuthenticated(true);
-                useLocalStorage.setValue()
-                setUserInfo(newUserInfo);
-                console.log(userInfo);
+              let responseUserInfo = response.data.data.token;
+              let nameUser = response.data.data.username;
+              setUserInfo(nameUser);
+              setUserToken(responseUserInfo);
             }else{
               setPopupMessage("Usuario o contraseña incorrecta"); // Establece el mensaje de error
               setShowPopup(true); // Muestra el popup en caso de error

@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
-import {User, Envelope, MapPinLine, IdentificationCard, Phone, Key, Buildings, EyeClosed, Eye, ArrowArcLeft} from '@phosphor-icons/react';
+import {User, Envelope, MapPinLine, IdentificationCard, Phone, Key, Buildings, EyeClosed, Eye, ArrowArcLeft, GlobeHemisphereWest, Desktop } from '@phosphor-icons/react';
 import './../Styles/Register.css';
+import MyMap from "./../maps/Maps.jsx"
+import httpClient from "../../config/httpClient.js"; 
+import Popup from "../pages/utils/popup";
+import { Navigate } from 'react-router-dom';
 
 function RegistroComponent() {
   const [userInfo, setUserInfo] = useState({
@@ -20,23 +24,26 @@ function RegistroComponent() {
     ventureMapLatitude: '',
     ventureMapLongitude: '',
     ventureName: '',
-    microSiteAddress: '',
     microSiteDescription: '',
-    micrositeExperiences: '',
+    micrositeName: '',
   });
 
   const [isPasswordsMatch, setIsPasswordsMatch] = useState(true);
   const [showFields, setShowFields] = useState(false);
   const [showUserPanel, setShowUserPanel] = useState(false);
-  const [showExplanation, setShowExplanation] = useState(true);
+  const [, setShowExplanation] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
+  const [showPopup, setShowPopup] = useState(false); // Nuevo estado para mostrar el popup
+  const [popupMessage, setPopupMessage] = useState(""); // Mensaje de error del popup
+  const [userData, setUserData] = useState({});
+  const [microSiteData, setMicroSiteData] = useState({});
+
 
   const handleRegistro = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-
-    // Actualiza userInfo usando el formulario
-    setUserInfo({
+  
+    const userInfoData = {
       email: formData.get('email') as string,
       password: formData.get('password') as string,
       passwordConfirmation: formData.get('passwordConfirmation') as string,
@@ -45,30 +52,59 @@ function RegistroComponent() {
       lastNames: formData.get('lastNames') as string,
       address: formData.get('address') as string,
       phoneNumber: formData.get('phoneNumber') as string,
-    });
+    };
+    const microSiteData = {
+      ventureAddress: formData.get('ventureAddress') as string,
+      ventureDescription: formData.get('ventureDescription') as string,
+      ventureMapLatitude: formData.get('ventureMapLatitude') as string,
+      ventureMapLongitude: formData.get('ventureMapLongitude') as string,
+      ventureName: formData.get('ventureName') as string,
+      microSiteDescription: formData.get('microSiteDescription') as string,
+      micrositeName: formData.get('micrositeName') as string,
+      };
+  
+      if (showUserPanel) {
+        setUserData(userInfoData);
+      } else {
+        setMicroSiteData(microSiteData);
+      }
+  
+      if (userInfoData.password === userInfoData.passwordConfirmation) {
+        setIsPasswordsMatch(true);
+        const userInfo = showUserPanel ? userInfoData : { ...userInfoData, address: microSiteData.ventureAddress };
+        const requestPayload = showUserPanel ? userInfo : { userInfo, microSite: microSiteData };
+        console.log(requestPayload);
+      
+      httpClient.post("user/register", requestPayload)
+        .then((response) => {
+          if (response.data.success) {
+            console.log("Exitoooo");
+            setPopupMessage("EXITOOOOOOO"); // Mensaje de error para el registro
+            setShowPopup(true);
+            return <Navigate to="/" />
 
-    // Si es una empresa, actualiza microSite usando el formulario
-    if (!showUserPanel) {
-      setMicroSite({
-        ventureAddress: formData.get('ventureAddress') as string,
-        ventureDescription: formData.get('ventureDescription') as string,
-        ventureMapLatitude: formData.get('ventureMapLatitude') as string,
-        ventureMapLongitude: formData.get('ventureMapLongitude') as string,
-        ventureName: formData.get('ventureName') as string,
-        microSiteAddress: formData.get('microSiteAddress') as string,
-        microSiteDescription: formData.get('microSiteDescription') as string,
-        micrositeExperiences: formData.get('micrositeExperiences') as string,
-      });
-    }
-
-    if (userInfo.password === userInfo.passwordConfirmation) {
-      setIsPasswordsMatch(true); // Reset to true when passwords match
-      console.log(showUserPanel ? userInfo : { ...userInfo, ...microSite });
+          } 
+          else {
+            setPopupMessage("Error en el registro"); // Mensaje de error para el registro
+            setShowPopup(true);
+          }
+        })
+        .catch((error) => {
+          console.error('Error al hacer la solicitud:', error);// Muestra el popup en caso de error        
+          setPopupMessage("Error en el registro"); // Mensaje de error para el registro
+          setShowPopup(true);
+        });
     } else {
-      setIsPasswordsMatch(false); // Las contraseñas no coinciden
+      setPopupMessage("Las contraseñas no coinciden"); // Mensaje de error para el registro
+      setShowPopup(true);
+      setIsPasswordsMatch(false);
     }
   };
 
+  const closePopup = () => {
+    setShowPopup(false);
+  }
+  
  const showFieldsForUser = () => {
     setShowFields(true);
     setShowUserPanel(true);
@@ -81,7 +117,7 @@ function RegistroComponent() {
     setShowExplanation(false);
   };
 
-  const handleShowPasswordToggle = (event) => {
+  const handleShowPasswordToggle = (event: { preventDefault: () => void; }) => {
     setShowPassword(!showPassword);
     event.preventDefault();
    };
@@ -89,6 +125,15 @@ function RegistroComponent() {
    const showSelection = () => {
     setShowFields(false);
     setShowExplanation(true);
+  };
+
+  // Esta función se encarga de actualizar las coordenadas en el estado
+  const handleCoordinateChange = ({ lat, lng }: { lat: string; lng: string }) => {
+    setMicroSite((prevMicroSite) => ({
+      ...prevMicroSite,
+      ventureMapLongitude: lng,
+      ventureMapLatitude: lat,
+    }));
   };
 
   return (
@@ -240,6 +285,36 @@ function RegistroComponent() {
               <>
               <div className="input-field">
                 <div className='edge-input-icon' tabIndex={0}>
+                  <Desktop  className="icons-register"></Desktop >
+                  <input
+                    className='input-register'
+                    type="text"
+                    id="micrositeName"
+                    name="micrositeName"
+                    placeholder="Nombre del micrositio"
+                    value={microSite.micrositeName}
+                    onChange={(e) => setMicroSite({ ...microSite, micrositeName: e.target.value })}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="input-field">
+                <div className='edge-input-icon' tabIndex={0}>
+                  <Desktop  className="icons-register"></Desktop >
+                  <input
+                    className='input-register'
+                    type="text"
+                    id="microSiteDescription"
+                    name="microSiteDescription"
+                    placeholder="Descripción del micrositio"
+                    value={microSite.microSiteDescription}
+                    onChange={(e) => setMicroSite({ ...microSite, microSiteDescription: e.target.value })}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="input-field">
+                <div className='edge-input-icon' tabIndex={0}>
                   <Buildings className="icons-register"></Buildings>
                   <input
                     className='input-register'
@@ -266,6 +341,43 @@ function RegistroComponent() {
                     onChange={(e) => setMicroSite({ ...microSite, ventureAddress: e.target.value })}
                     required
                   />
+                </div>
+              </div>
+              <div className='container-mapa'>
+                <div className='map'>
+                  <MyMap onCoordinateChange={handleCoordinateChange} />
+                </div>
+                <div className='container-lat-lng'>
+                  <div className="input-field">
+                    <div className='edge-input-icon' tabIndex={0}>
+                      <GlobeHemisphereWest className="icons-register"></GlobeHemisphereWest>
+                      <input
+                        className='input-register'
+                        type="text"
+                        id="ventureMapLongitude"
+                        name="ventureMapLongitude"
+                        placeholder="Longitud"
+                        value={microSite.ventureMapLongitude}
+                        onChange={(e) => setMicroSite({ ...microSite, ventureMapLongitude: e.target.value })}
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div className="input-field">
+                    <div className='edge-input-icon' tabIndex={0}>
+                      <GlobeHemisphereWest className="icons-register"></GlobeHemisphereWest>
+                      <input
+                        className='input-register'
+                        type="text"
+                        id="ventureMapLatitude"
+                        name="ventureMapLatitude"
+                        placeholder="Latitud"
+                        value={microSite.ventureMapLatitude}
+                        onChange={(e) => setMicroSite({ ...microSite, ventureMapLatitude: e.target.value })}
+                        required
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
               <div>
@@ -297,6 +409,12 @@ function RegistroComponent() {
                 Registrarse
                 </button>
               </div>
+              <Popup
+                  isOpen={showPopup}
+                  onClose={closePopup}
+                  title="Error"
+                  message={popupMessage}
+                />
             </form>
           ) : (
             <div className='container-buton'>

@@ -177,4 +177,24 @@
   transition: box-shadow 0.3s
 }
 
+.map {
+  display: flex;
+  justify-content: flex-start;
+  height: 182px;
+  width: 51.6%;
+  margin-Bottom: 20px;
+  border-Radius: 5px;
+  border: 1px solid #ccc;
+}
 
+.container-mapa{
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.container-lat-lng{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
