@@ -21,11 +21,7 @@ export default function Profile() {
 
  const handleSubmit = useCallback(async () => {
    try {
-     const response = await httpClient.get("user/general/getUserInfo", {
-       headers: {
-         Authorization: tokenReplace,
-       },
-     });
+     const response = await httpClient.get("user/general/getUserInfo");
      setProfileData(response.data.data);
    } catch (error) {
      console.error("Error: ", error);
@@ -44,6 +40,7 @@ export default function Profile() {
   setShowPopup(false);
  };
 
+ /*
  const handleUpdateProfile = async () => {
   try {
   const formData = new FormData();
@@ -71,7 +68,7 @@ export default function Profile() {
     };
     reader.readAsDataURL(file);
    };
-
+*/
 return (
   <div className="max-w-5xl mx-auto my-12 bg-white rounded-3xl shadow-xl overflow-hidden">
   <div className="relative">
