@@ -9,10 +9,12 @@ function App() {
   return (
     <div className="container-pages bg-gray-100">
       <NavBar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-      </Routes>
-      <Outlet />
+      <div className='container-internal-pages p-4 md:p-12 '>
+        <Routes>
+          <Route path="/" element={<Home />} />
+        </Routes>
+        <Outlet />
+      </div>
       <Footer />
     </div>
   )

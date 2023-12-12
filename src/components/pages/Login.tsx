@@ -1,52 +1,56 @@
 import Image1 from "../../assets/Ilustracion.png";
 import { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import { Image } from "../atoms/Image";
 import httpClient from "../../config/httpClient.js"; 
 import "../Styles/Login.css";
 import Popup from "../pages/utils/popup";
-import { getUserToken, setUserToken, setUserInfo } from "../../localStorage/localStorage.js";
+import { setUserToken, setUserInfo } from "../../localStorage/localStorage.js";
 import {User, Key, EyeClosed, Eye} from '@phosphor-icons/react';
 
 export default function Login() {
-
-  const [ idNumber, setIdNumber ] = useState("");
-  const [ password, setPassword ] = useState("");
-  const [showPopup, setShowPopup] = useState(false); // Nuevo estado para mostrar el popup
+  const navigate = useNavigate();
+  const [idNumber, setIdNumber] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPopup, setShowPopup] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [popupMessage, setPopupMessage] = useState(""); // Mensaje de error del popup
-
-  if(getUserToken){
-    return <Navigate to="/" />
+  const [popupMessage, setPopupMessage] = useState("");
+ 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (idNumber && password) {
+      httpClient.post("auth/login", { idNumber, password })
+        .then((response) => {
+          if (response.data.success) {
+            let nameUser = response.data.data.username;
+            setUserInfo(nameUser);
+            let responseUserInfo = response.data.data.token;
+            setUserToken(responseUserInfo);
+            navigate('/');
+          } else {
+            setPopupMessage("Usuario o contraseña incorrecta");
+            setShowPopup(true);
+          }
+        })
+        .catch((error) => {
+          console.error('Error al hacer la solicitud:', error);
+          setPopupMessage("Error al conectar con el servidor");
+          setShowPopup(true);
+        });
+    } else {
+      setPopupMessage("Por favor, rellene todos los campos");
+      setShowPopup(true);
+    }
   }
-
-  const handleSubmit  = ()  => {
-	httpClient.post("auth/login", {idNumber:idNumber,password:password})
-      .then((response) => {
-        if(response.data.success)
-            {
-              let responseUserInfo = response.data.data.token;
-              let nameUser = response.data.data.username;
-              setUserInfo(nameUser);
-              setUserToken(responseUserInfo);
-            }else{
-              setPopupMessage("Usuario o contraseña incorrecta"); // Establece el mensaje de error
-              setShowPopup(true); // Muestra el popup en caso de error
-            }
-      })
-      .catch((error) => {
-        console.error('Error al hacer la solicitud:', error);// Muestra el popup en caso de error
-      });
-  }
-
-   const closePopup = () => {
+ 
+  const closePopup = () => {
     setShowPopup(false);
   }
-
+ 
   const handleShowPasswordToggle = (event) => {
-    setShowPassword(!showPassword);
     event.preventDefault();
-   };
+    setShowPassword(!showPassword);
+  }
 
   return (
       <div className="login-container">

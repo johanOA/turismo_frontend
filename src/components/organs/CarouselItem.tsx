@@ -1,25 +1,34 @@
+import React from 'react';
+
 interface CarouselItemProps {
-    imageUrl: string;
+    imageSrc: string;
     author: string;
     title: string;
     topic: string;
     description: string;
 }
-const CarouselItem = ({ imageUrl, author, title, topic, description }: CarouselItemProps) => {
+
+const CarouselItem: React.FC<CarouselItemProps> = ({
+    imageSrc,
+    author,
+    title,
+    topic,
+    description,
+}) => {
     return (
         <div className="item-hs">
-            <img src={imageUrl} alt={title} />
-            <div className="content-hs">
-                <div className="author-hs">{author}</div>
-                <div className="title-hs">{title}</div>
-                <div className="topic-hs">{topic}</div>
-                <div className="des-hs">{description}</div>
-                <div className="buttons-hs">
-                    <button>VER MAS</button>
-                    <button>ACERCA DE</button>
-                </div>
-            </div>
-        </div>
+                        <img src={imageSrc}/>
+                        <div className="content-hs">
+                            <div className="author-hs">{author}</div>
+                            <div className="title-hs">{title}</div>
+                            <div className="topic-hs">{topic}</div>
+                            <div className="des-hs">{description}</div>
+                            <div className="buttons-hs">
+                                <button>VER MAS</button>
+                                <button>ACERCA DE</button>
+                            </div>
+                        </div>
+                    </div>
     );
 };
 

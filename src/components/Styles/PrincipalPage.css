@@ -62,8 +62,9 @@
 }
 
 .slide-arriba .carousel-hs .list-hs .item-hs .content-hs .author-hs {
+    font-size: 25px;
     font-weight: bold;
-    letter-spacing: 10px;
+    letter-spacing: 8px;
 }
 
 .slide-arriba .carousel-hs .list-hs .item-hs .content-hs .title-hs,

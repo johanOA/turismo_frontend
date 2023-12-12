@@ -1,14 +1,14 @@
 export function getUserToken(){
     try{
         const item = window.localStorage.getItem("token");
-        return item ? JSON.parse(item) : "";     
+        return item ? item : "";    
     }catch (error){
         console.log(error);
     }
 }
 export function setUserToken(token){
     try {
-        window.localStorage.setItem("token", JSON.stringify(token));
+        window.localStorage.setItem("token", token);
     } catch (error) {
         console.error(error);
     }
