@@ -46,21 +46,23 @@ export default function Profile() {
 
  const handleUpdateProfile = async () => {
   try {
-   const formData = new FormData();
-   formData.append("image", profileData?.imageUrl);
-   const response = await httpClient.post("user/general/updateProfilePicture", formData, {
-     headers: {
-       Authorization: `Bearer ${tokenReplace}`,
-     },
-   });
-   console.log(response.data);
-   handleClosePopup(); // Cerrar el popup después de subir la imagen
+  const formData = new FormData();
+  if (profileData?.imageUrl) {
+    formData.append("image", profileData.imageUrl);
+  }
+  const response = await httpClient.post("user/general/updateProfilePicture", formData, {
+    headers: {
+      Authorization: `Bearer ${tokenReplace}`,
+    },
+  });
+  console.log(response.data);
+  handleClosePopup(); // Cerrar el popup después de subir la imagen
   } catch (error) {
-   console.error("Error: ", error);
-   alert("Hubo un error al subir la imagen. Por favor, inténtalo de nuevo."); // Mostrar un mensaje de error al usuario
+  console.error("Error: ", error);
+  alert("Hubo un error al subir la imagen. Por favor, inténtalo de nuevo."); // Mostrar un mensaje de error al usuario
   }
  };
-
+ 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     const reader = new FileReader();
