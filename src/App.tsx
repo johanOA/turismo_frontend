@@ -8,7 +8,7 @@ function App() {
 
   return (
     <div className="container-pages bg-gray-100">
-      {/* <NavBar /> */}
+      <NavBar />
       <div className='container-internal-pages '>
         <Routes>
           <Route path="/" element={<Home />} />

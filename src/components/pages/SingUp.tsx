@@ -143,14 +143,14 @@ const handleNavigate = () => {
       <div className='container-internal'>
         <div className="forms-container">
           <>
-          {showFields ? (
+          {!showFields ? (
             <div className='container-buton'>
               <button onClick={showFieldsForUser} className="btn_register">Registro para Usuarios</button>
               <button onClick={showFieldsForCompany} className="btn_register">Registro de Emprendimientos</button>
             </div>
           ) : (
             <>
-            {!completeRegistration ? (
+            {completeRegistration ? (
               <>
               <div>Revisa el correo que acabas de ingresas</div>
               <div className='container-buton'>
