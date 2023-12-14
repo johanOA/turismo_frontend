@@ -9,7 +9,6 @@ const RelatedPlacesCarousel = () => {
     { name: 'Lugar 1', image: 'place1.jpg' },
     { name: 'Lugar 2', image: 'place2.jpg' },
     { name: 'Lugar 3', image: 'place3.jpg' },
-    // Agrega más lugares relacionados según sea necesario
   ];
 
   const settings = {

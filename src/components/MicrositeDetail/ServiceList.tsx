@@ -5,7 +5,6 @@ const ServiceList = () => {
     { name: 'Servicio 1', price: '$20' },
     { name: 'Servicio 2', price: '$30' },
     { name: 'Servicio 3', price: '$25' },
-    // Agrega más servicios según sea necesario
   ];
 
   return (
