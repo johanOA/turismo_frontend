@@ -1,4 +1,5 @@
 import React from 'react';
+import "../Styles/PrincipalPage.css";
 
 interface CarouselItemProps {
     imageSrc: string;

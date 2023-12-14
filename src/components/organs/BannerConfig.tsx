@@ -34,7 +34,6 @@ const BannerConfig = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Aquí se puede enviar los datos actualizados al servidor
-    console.log('Form data:', formData);
     // Agregar la lógica para enviar la información al servidor o realizar otras acciones necesarias
   };
   
@@ -268,5 +267,4 @@ const BannerConfig = () => {
     </div>
   );
 };
-
 export default BannerConfig;

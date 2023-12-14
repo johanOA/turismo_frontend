@@ -11,7 +11,6 @@ import { useEffect } from "react"
 const Home = () => {
     useEffect(() => {
         let papa = {"papabomba" : "es rancia"};
-        console.log("cargado");
         window.localStorage.setItem("papa", JSON.stringify(papa));
     }, []);
     return (

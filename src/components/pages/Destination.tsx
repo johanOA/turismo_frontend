@@ -32,7 +32,6 @@ const DetalleTuristico = ({ id }) => {
      const respuesta = await axios.get(`https://tu-api.com/detalle/${id}`);
      setDetalle(respuesta.data);
    } catch (error) {
-    console.error('Error al hacer la solicitud:', error);
     }
   }, [id]);
 

@@ -33,7 +33,6 @@ export default function Login() {
           }
         })
         .catch((error) => {
-          console.error('Error al hacer la solicitud:', error);
           setPopupMessage("Error al conectar con el servidor");
           setShowPopup(true);
         });
@@ -55,12 +54,12 @@ export default function Login() {
   return (
       <div className="login-container">
         <section className="login-section">
-          <div className="background-image">
-            <Image className="h-full w-full object-cover" image={Image1} alt="Hero Background Vector" />
-          </div>
+          <Image className="h-full w-full object-cover" image={Image1} alt="Hero Background Vector" />
           <main className="main">
             <div className="login-content">
-              <h1 className="login-title">Login</h1>
+              <div className="login-header">
+                <span>Login</span>
+              </div>
               <form className="login-form" onSubmit={handleSubmit}>
                 <label className="label-login">Numero de Identidad</label>
                 <div className="input-field-login">
@@ -94,7 +93,7 @@ export default function Login() {
                         }
                     </button>
                   </div>
-                  <a href="#" className="password-option">¿Olvidaste tu contraseña?</a>
+                  <a href="./EmailConfirmation" className="password-option">¿Olvidaste tu contraseña?</a>
                 </div>
                 <a className="login-button" onClick={handleSubmit}>Login</a>
                 <Popup

@@ -8,8 +8,8 @@ function App() {
 
   return (
     <div className="container-pages bg-gray-100">
-      <NavBar />
-      <div className='container-internal-pages p-4 md:p-12 '>
+      {/* <NavBar /> */}
+      <div className='container-internal-pages '>
         <Routes>
           <Route path="/" element={<Home />} />
         </Routes>
@@ -19,5 +19,4 @@ function App() {
     </div>
   )
 }
-
 export default App

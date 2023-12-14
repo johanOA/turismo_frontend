@@ -1,11 +1,9 @@
 import { useEffect, useRef  } from 'react';
 import "../Styles/PrincipalPage.css";
 import CarouselItem from "./CarouselItem";
-import { setUserToken } from "../../localStorage/localStorage.js";
 
 const HeroSection = () => {
         
-    console.log(setUserToken);
     const carouselDomRef = useRef<HTMLElement | null>(null);
     const listItemDomRef = useRef<HTMLElement | null>(null);
     const thumbnailDomRef = useRef<HTMLElement | null>(null);
@@ -90,104 +88,97 @@ const HeroSection = () => {
     }
     
     return (     
-        <section className="slide-arriba">
-            {/* Header */}
-            <header>
-                <a href=""></a>
-                <a href=""></a>
-                <a href=""></a>
-            </header>
-
-            {/* Carrousel */}
-            <div className="carousel-hs">
-                {/* list item */}
-                <div className="list-hs">
-                    <CarouselItem
-                        imageSrc="/src/assets/PrincipalPage1.jpg"
-                        author="Las"
-                        title="Hermosas vistas"
-                        topic="De Génova"
-                        description="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptates quibusdam molestias obcaecati? Eaque modi et hic libero repellendus animi, atque, debitis impedit autem voluptas ex provident voluptatum, voluptate at porro."
-                    />
-                    <CarouselItem 
-                        imageSrc="/src/assets/PrincipalPage2.jpg"
-                        author="Las"
-                        title="Hermosas vistas"
-                        topic="De Génova"
-                        description="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptates quibusdam molestias obcaecati? Eaque modi et hic libero repellendus animi, atque, debitis impedit autem voluptas ex provident voluptatum, voluptate at porro."
-                    />
-                    <CarouselItem 
-                        imageSrc="/src/assets/PrincipalPage3.jpg"
-                        author="Las"
-                        title="Hermosas vistas"
-                        topic="De Génova"
-                        description="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptates quibusdam molestias obcaecati? Eaque modi et hic libero repellendus animi, atque, debitis impedit autem voluptas ex provident voluptatum, voluptate at porro."
-                    />
-                    <CarouselItem 
-                        imageSrc="/src/assets/PrincipalPage4.jpg"
-                        author="Las"
-                        title="Hermosas vistas"
-                        topic="De Génova"
-                        description="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptates quibusdam molestias obcaecati? Eaque modi et hic libero repellendus animi, atque, debitis impedit autem voluptas ex provident voluptatum, voluptate at porro."
-                    />
+        <div className="container-principal-page">
+            <section className="slide-arriba" >
+                {/* Carrousel */}
+                <div className="carousel-hs">
+                    {/* list item */}
+                    <div className="list-hs">
+                        <CarouselItem
+                            imageSrc="/src/assets/PrincipalPage1.jpg"
+                            author="Las"
+                            title="Hermosas vistas"
+                            topic="De Génova"
+                            description="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptates quibusdam molestias obcaecati? Eaque modi et hic libero repellendus animi, atque, debitis impedit autem voluptas ex provident voluptatum, voluptate at porro."
+                        />
+                        <CarouselItem 
+                            imageSrc="/src/assets/PrincipalPage2.jpg"
+                            author="Las"
+                            title="Hermosas vistas"
+                            topic="De Génova"
+                            description="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptates quibusdam molestias obcaecati? Eaque modi et hic libero repellendus animi, atque, debitis impedit autem voluptas ex provident voluptatum, voluptate at porro."
+                        />
+                        <CarouselItem 
+                            imageSrc="/src/assets/PrincipalPage3.jpg"
+                            author="Las"
+                            title="Hermosas vistas"
+                            topic="De Génova"
+                            description="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptates quibusdam molestias obcaecati? Eaque modi et hic libero repellendus animi, atque, debitis impedit autem voluptas ex provident voluptatum, voluptate at porro."
+                        />
+                        <CarouselItem 
+                            imageSrc="/src/assets/PrincipalPage4.jpg"
+                            author="Las"
+                            title="Hermosas vistas"
+                            topic="De Génova"
+                            description="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptates quibusdam molestias obcaecati? Eaque modi et hic libero repellendus animi, atque, debitis impedit autem voluptas ex provident voluptatum, voluptate at porro."
+                        />
+                    </div>
+                    {/* Thumbnail */}
+                    <div className="thumbnail-hs">
+                        <div className="item-hs">
+                            <img src="/src/assets/PrincipalPage2.jpg"/>
+                            <div className="content-hs">
+                                <div className="title-hs">
+                                    Nombre Slider
+                                </div>
+                                <div className="des-hs">
+                                    Descripcion
+                                </div>
+                            </div>
+                        </div>
+                        <div className="item-hs">
+                            <img src="/src/assets/PrincipalPage3.jpg"/>
+                            <div className="content-hs">
+                                <div className="title-hs">
+                                    Nombre Slider
+                                </div>
+                                <div className="des-hs">
+                                    Descripcion
+                                </div>
+                            </div>
+                        </div>
+                        <div className="item-hs">
+                            <img src="/src/assets/PrincipalPage4.jpg"/>
+                            <div className="content-hs">
+                                <div className="title-hs">
+                                    Nombre Slider
+                                </div>
+                                <div className="des-hs">
+                                    Descripcion
+                                </div>
+                            </div>
+                        </div>
+                        <div className="item-hs">
+                            <img src="/src/assets/PrincipalPage1.jpg"/>
+                            <div className="content-hs">
+                                <div className="title-hs">
+                                    Nombre Slider
+                                </div>
+                                <div className="des-hs">
+                                    Descripcion
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {/* arrows */}
+                    <div className="arrows-hs">
+                        <button id="prev-hs">←</button>
+                        <button id="next-hs">→</button>                    
+                    </div>
+                    <div className="time-hs"></div>
                 </div>
-                {/* Thumbnail */}
-                <div className="thumbnail-hs">
-                    
-                    <div className="item-hs">
-                        <img src="/src/assets/PrincipalPage2.jpg"/>
-                        <div className="content-hs">
-                            <div className="title-hs">
-                                Nombre Slider
-                            </div>
-                            <div className="des-hs">
-                                Descripcion
-                            </div>
-                        </div>
-                    </div>
-                    <div className="item-hs">
-                        <img src="/src/assets/PrincipalPage3.jpg"/>
-                        <div className="content-hs">
-                            <div className="title-hs">
-                                Nombre Slider
-                            </div>
-                            <div className="des-hs">
-                                Descripcion
-                            </div>
-                        </div>
-                    </div>
-                    <div className="item-hs">
-                        <img src="/src/assets/PrincipalPage4.jpg"/>
-                        <div className="content-hs">
-                            <div className="title-hs">
-                                Nombre Slider
-                            </div>
-                            <div className="des-hs">
-                                Descripcion
-                            </div>
-                        </div>
-                    </div>
-                    <div className="item-hs">
-                        <img src="/src/assets/PrincipalPage1.jpg"/>
-                        <div className="content-hs">
-                            <div className="title-hs">
-                                Nombre Slider
-                            </div>
-                            <div className="des-hs">
-                                Descripcion
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {/* arrows */}
-                <div className="arrows-hs">
-                    <button id="prev-hs">←</button>
-                    <button id="next-hs">→</button>                    
-                </div>
-                <div className="time-hs"></div>
-            </div>
-        </section>
+            </section>
+        </div>
     )
 }
-
 export default HeroSection

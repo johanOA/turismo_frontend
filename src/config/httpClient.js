@@ -9,7 +9,7 @@ const instance = axios.create({
 instance.interceptors.request.use(
  function(config) {
   const token = getUserToken(); 
-  if (token) {
+  if (token != null) {
     config.headers["Authorization"] = token;
   }
   return config;

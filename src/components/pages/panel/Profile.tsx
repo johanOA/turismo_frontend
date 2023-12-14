@@ -1,5 +1,5 @@
 import httpClient from "../../../config/httpClient.js";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 
 export default function Profile() {
  type ProfileData = {
@@ -12,25 +12,23 @@ export default function Profile() {
    idNumber: string;
    accessName: string;
    accessDescription: string;
+   imageFile?: File;
  };
 
- const token = localStorage.getItem("token");
- const tokenReplace = token?.replace('"', '');
  const [profileData, setProfileData] = useState<ProfileData>();
  const [showPopup, setShowPopup] = useState(false);
 
- const handleSubmit = useCallback(async () => {
-   try {
-     const response = await httpClient.get("user/general/getUserInfo");
-     setProfileData(response.data.data);
-   } catch (error) {
-     console.error("Error: ", error);
-   }
- }, [tokenReplace]);
+ const updateProfileInfo = async () => {
+  try {
+    const response = await httpClient.get("user/general/getUserInfo");
+    setProfileData(response.data.data);
+  } catch (error) {
+  }
+ }
 
  useEffect(() => {
-   handleSubmit();
- }, [handleSubmit]);
+  updateProfileInfo();
+ },[]);
 
  const handleImageClick = () => {
   setShowPopup(true);
@@ -40,47 +38,56 @@ export default function Profile() {
   setShowPopup(false);
  };
 
- /*
  const handleUpdateProfile = async () => {
   try {
-  const formData = new FormData();
-  if (profileData?.imageUrl) {
-    formData.append("image", profileData.imageUrl);
-  }
-  const response = await httpClient.post("user/general/updateProfilePicture", formData, {
-    headers: {
-      Authorization: `Bearer ${tokenReplace}`,
-    },
-  });
-  console.log(response.data);
+    const formData = new FormData();
+    if (profileData?.imageFile) {
+      formData.append("image", profileData.imageFile);
+    }
+  
+  const response = await httpClient.post("user/general/updateProfilePicture", formData);
   handleClosePopup(); // Cerrar el popup después de subir la imagen
   } catch (error) {
-  console.error("Error: ", error);
   alert("Hubo un error al subir la imagen. Por favor, inténtalo de nuevo."); // Mostrar un mensaje de error al usuario
   }
  };
  
-  const handleImageChange = (event) => {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setProfileData({...profileData, imageUrl: reader.result});
-    };
-    reader.readAsDataURL(file);
-   };
-*/
+ const handleImageChange = (event) => {
+  const file = event.target.files[0];
+  const reader = new FileReader();
+  reader.onloadend = () => {
+    if (profileData) {
+      setProfileData({...profileData, imageFile: file});
+    }
+  };
+  reader.readAsDataURL(file);
+ };
+
 return (
   <div className="max-w-5xl mx-auto my-12 bg-white rounded-3xl shadow-xl overflow-hidden">
   <div className="relative">
     <div className="relative p-6 flex items-center">
       <img className="h-32 w-32 rounded-full border-4 border-white shadow-xl" src={profileData?.imageUrl} alt="Profile" onClick={handleImageClick} />
-      {showPopup && (
-        <div className="absolute z-10 bg-white p-4 rounded shadow-lg">
-          <input type="file" id="profileImage" accept="image/*" style={{display: 'none'}} onChange={handleImageChange} />
-          <button onClick={handleImageClick}>Actualizar foto de perfil</button>
-          <button onClick={handleClosePopup}>Ver foto de perfil</button>
-       </div>
-      )}      
+        {showPopup && (
+          <div className="absolute z-10 bg-white p-4 rounded shadow-lg">
+            <input
+              type="file"
+              id="profileImage"
+              accept="image/*"
+              className="hidden"
+              onChange={handleImageChange}
+            />
+            <label htmlFor="profileImage" className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-700 cursor-pointer">
+              Actualizar foto de perfil
+            </label>
+            {profileData?.imageFile && (
+              <button onClick={handleUpdateProfile} className="py-2 px-4 bg-green-500 text-white rounded hover:bg-green-700 mt-2">
+                Guardar imagen de perfil
+              </button>
+            )}
+            <button onClick={handleClosePopup}>Ver foto de perfil</button>
+          </div>
+        )}      
       <div className="ml-6">
         <h2 className="text-4xl font-bold text-white">{profileData?.names}</h2>
         <p className="text-lg text-indigo-200">{profileData?.email}</p>

@@ -61,7 +61,7 @@ export default function TouristRoutes() {
     };
 
     return (
-    <div className='container-internal-pages p-4 md:p-12 '>
+    <div className='container-internal-pages'>
         <div className="mb-8 flex justify-between w-full border-b border-black-500">
             <input
                 type="text"

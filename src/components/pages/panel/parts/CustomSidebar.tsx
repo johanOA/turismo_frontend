@@ -2,7 +2,6 @@ import {Gear, List, User,UserCircleGear,Desktop,UserList,
         UserPlus, House, ArchiveBox,PlusCircle,Mountains,
         FloppyDiskBack,MapPin,ArrowLeft,ArrowRight } from '@phosphor-icons/react';
 import React, { useState } from 'react';
-import { useAuth } from "../../../../Auth/AuthProvider";
 import  Colors from "../../../../constants/Colors.js";
 import { useNavigate } from 'react-router-dom';
 
@@ -12,7 +11,6 @@ import { Sidebar, Menu, MenuItem, SubMenu,useProSidebar} from 'react-pro-sidebar
 const CustomSidebar = () => {
   const navigate = useNavigate();
 
-  const { isAuthenticated, userInfo} = useAuth();
   const { collapseSidebar, toggleSidebar, collapsed, toggled, broken, rtl } =
   useProSidebar();
 

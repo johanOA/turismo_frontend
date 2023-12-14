@@ -13,9 +13,11 @@ import SignUp from './components/pages/SingUp.tsx';
 import Entrepreneurship from './components/pages/Entrepreneurship.tsx';
 import Blogs from './components/pages/Blogs.tsx';
 import TouristRoutes from './components/pages/TouristRoutes.tsx';
-import { AuthProvider } from './Auth/AuthProvider.tsx';
 import { ProSidebarProvider } from "react-pro-sidebar";
 import ProtectedRoutes from './ProtectedRoutes/ProtectedRoutes.tsx'
+import EmailConfirmation from './components/pages/EmailConfirmation.tsx';
+import ResetPasswordComponent from './components/pages/RecoverPassword.tsx';
+import EmailConfirmationRegister from './components/pages/EmailConfirmationRegister.tsx';
 
 const router = createBrowserRouter([
   {
@@ -42,6 +44,22 @@ const router = createBrowserRouter([
         path: "/TouristRoutes",
         element: <TouristRoutes/>
       },
+      {
+        path: "/EmailConfirmation",
+        element: <EmailConfirmation/>
+      },
+      {
+        path: "/RecoverPassword/:token",
+        element: <ResetPasswordComponent />
+      },
+      {
+        path: "/VerifyEmail/:token",
+        element: <EmailConfirmationRegister />
+      },
+      {
+        path: "/EmailConfirmation",
+        element: <EmailConfirmation/>
+      }
     ]
   },
   {
@@ -79,10 +97,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <AuthProvider> 
-      <ProSidebarProvider>
-        <RouterProvider router={router} />
-      </ProSidebarProvider>
-    </AuthProvider>
+    <ProSidebarProvider>
+      <RouterProvider router={router} />
+    </ProSidebarProvider>
   </React.StrictMode>,
 )
