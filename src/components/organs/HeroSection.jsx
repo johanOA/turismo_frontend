@@ -1,4 +1,10 @@
 import { useEffect, useRef  } from 'react';
+
+import PrincipalPage1 from './ruta/a/la/PrincipalPage1.jpg';
+import PrincipalPage2 from './ruta/a/la/PrincipalPage2.jpg';
+import PrincipalPage3 from './ruta/a/la/PrincipalPage3.jpg';
+import PrincipalPage4 from './ruta/a/la/PrincipalPage4.jpg';
+
 import "../Styles/PrincipalPage.css";
 import CarouselItem from "./CarouselItem";
 
@@ -95,28 +101,28 @@ const HeroSection = () => {
                     {/* list item */}
                     <div className="list-hs">
                         <CarouselItem
-                            imageSrc="/assets/PrincipalPage1.jpg"
+                            imageSrc={PrincipalPage1}
                             author="Las"
                             title="Hermosas vistas"
                             topic="De Génova"
                             description="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptates quibusdam molestias obcaecati? Eaque modi et hic libero repellendus animi, atque, debitis impedit autem voluptas ex provident voluptatum, voluptate at porro."
                         />
                         <CarouselItem 
-                            imageSrc="/assets/PrincipalPage2.jpg"
+                            imageSrc={PrincipalPage2}
                             author="Las"
                             title="Hermosas vistas"
                             topic="De Génova"
                             description="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptates quibusdam molestias obcaecati? Eaque modi et hic libero repellendus animi, atque, debitis impedit autem voluptas ex provident voluptatum, voluptate at porro."
                         />
                         <CarouselItem 
-                            imageSrc="/assets/PrincipalPage3.jpg"
+                            imageSrc={PrincipalPage3}
                             author="Las"
                             title="Hermosas vistas"
                             topic="De Génova"
                             description="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptates quibusdam molestias obcaecati? Eaque modi et hic libero repellendus animi, atque, debitis impedit autem voluptas ex provident voluptatum, voluptate at porro."
                         />
                         <CarouselItem 
-                            imageSrc="/assets/PrincipalPage4.jpg"
+                            imageSrc={PrincipalPage4}
                             author="Las"
                             title="Hermosas vistas"
                             topic="De Génova"
@@ -126,13 +132,13 @@ const HeroSection = () => {
                     {/* Thumbnail */}
                     <div className="thumbnail-hs">
                         <div className="item-hs">
-                            <img src="/assets/PrincipalPage2.jpg"/>
+                            <img src={PrincipalPage2}/>
                             <div className="content-hs">
                                 <div className="title-hs">
-                                    Nombre Slider
+                                     Ruta 1
                                 </div>
                                 <div className="des-hs">
-                                    Descripcion
+                                    Una ruta preciosa
                                 </div>
                             </div>
                         </div>
@@ -140,10 +146,10 @@ const HeroSection = () => {
                             <img src="/assets/PrincipalPage3.jpg"/>
                             <div className="content-hs">
                                 <div className="title-hs">
-                                    Nombre Slider
+                                    Ruta 2
                                 </div>
                                 <div className="des-hs">
-                                    Descripcion
+                                    La belleza del paisaje
                                 </div>
                             </div>
                         </div>
@@ -151,10 +157,10 @@ const HeroSection = () => {
                             <img src="/assets/PrincipalPage4.jpg"/>
                             <div className="content-hs">
                                 <div className="title-hs">
-                                    Nombre Slider
+                                    Ruta 3
                                 </div>
                                 <div className="des-hs">
-                                    Descripcion
+                                    Un paisaje hermoso
                                 </div>
                             </div>
                         </div>
@@ -162,10 +168,10 @@ const HeroSection = () => {
                             <img src="/assets/PrincipalPage1.jpg"/>
                             <div className="content-hs">
                                 <div className="title-hs">
-                                    Nombre Slider
+                                    Ruta 4
                                 </div>
                                 <div className="des-hs">
-                                    Descripcion
+                                    del rio nace
                                 </div>
                             </div>
                         </div>
