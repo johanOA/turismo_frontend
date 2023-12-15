@@ -1,89 +1,112 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
+import httpClient from "../../../../../config/httpClient.js";
 
 interface Microsite {
   id: number;
-  name: string;
-  creator: string;
-  date: string;
-  status: 'pendiente' | 'rechazado' | 'aprobado';
-}
+  status: 'PENDIENTE' | 'RECHAZADO' | 'APROBADO' | 'EN_PROCESO';
+  microSiteName: string;
+  userName: string;
+  userLastName: string;
+  ventureName: string;
+  comment: string | null;
+ }
 
 const ITEMS_PER_PAGE = 3;
 
 const ApprovalPanel: React.FC = () => {
-  const [microsites, setMicrosites] = useState<Microsite[]>([
-    { id: 1, name: 'Micrositio 1', creator: 'Usuario1', date: '01/01/2023', status: 'pendiente' },
-    { id: 2, name: 'Micrositio 2', creator: 'Usuario2', date: '02/01/2023', status: 'rechazado' },
-    { id: 3, name: 'Micrositio 3', creator: 'Usuario3', date: '02/01/2023', status: 'aprobado' },
-    { id: 4, name: 'Micrositio 4', creator: 'Usuario4', date: '02/01/2023', status: 'aprobado' },
-    { id: 5, name: 'Micrositio 5', creator: 'Usuario5', date: '02/01/2023', status: 'aprobado' },
-    { id: 6, name: 'Micrositio 6', creator: 'Usuario6', date: '02/01/2023', status: 'aprobado' },
-    // Agregar más micrositios según sea necesario
-  ]);
+ const [microsites, setMicrosites] = useState<Microsite[]>([]);
+ const [selectedMicrosite, setSelectedMicrosite] = useState<Microsite | null>(null);
+ const [currentPage, setCurrentPage] = useState(1);
+ const [filter, setFilter] = useState<'PENDIENTE' | 'RECHAZADO' | 'APROBADO' | 'EN_PROCESO' |'TODOS'>('TODOS');
 
-  const [selectedMicrosite, setSelectedMicrosite] = useState<Microsite | null>(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [filter, setFilter] = useState<'pendiente' | 'rechazado' | 'aprobado' | 'todos'>('todos');
+ const totalPages = useMemo(() => Math.ceil(microsites.length / ITEMS_PER_PAGE), [microsites]);
 
-  const totalPages = Math.ceil(microsites.length / ITEMS_PER_PAGE);
+ const showApplicationMicrosite = async () => {
+  try {
+    const response = await httpClient.post("microsite/admin/getSolicitudes", {
+      "status": "PENDIENTE"
+    });
+    const newMicrosites = response.data.data;
+    setMicrosites(prevMicrosites => {
+      // Verifica si el id ya existe en la lista
+      const hasId = prevMicrosites.some(microsite => newMicrosites.some((newMicrosite: { id: number; }) => newMicrosite.id === microsite.id));
+      if (hasId) {
+        // Si el id ya existe, no agrega el nuevo micrositio
+        return prevMicrosites;
+      } else {
+        // Si el id no existe, agrega el nuevo micrositio
+        return [...prevMicrosites, ...newMicrosites];
+      }
+    });
+  } catch (error) {
+    console.error(error);
+  }
+ } 
+ 
+ useEffect(() => {
+  showApplicationMicrosite();
+ },[]);
 
-  const handleApprove = (microsite: Microsite) => {
+  const handleStatusChange = async (microsite: Microsite, status: 'PENDIENTE' | 'RECHAZADO' | 'APROBADO' | 'EN_PROCESO') => {
     const updatedMicrosites = microsites.map((m) =>
-      m.id === microsite.id ? { ...m, status: 'aprobado' } : m
+      m.id === microsite.id ? { ...m, status } : m
     );
+    console.log(status);
+    // Actualizar el estado local
     setMicrosites(updatedMicrosites);
+    // Actualizar el estado en el servidor
+    try {
+    const response = await httpClient.post("microsite/admin/updateSolicitudeStatus", {
+      "id": microsite.id,
+      "status": status
+    });
+    if (!response.ok) {
+      throw new Error("Failed to update status");
+    }
+    } catch (error) {
+    console.error(error);
+    }
     setSelectedMicrosite(null);
-  };
-
-  const handleReject = (microsite: Microsite) => {
-    const updatedMicrosites = microsites.map((m) =>
-      m.id === microsite.id ? { ...m, status: 'rechazado' } : m
-    );
-    setMicrosites(updatedMicrosites);
-    setSelectedMicrosite(null);
-  };
+  }; 
 
   const handleViewDetails = (microsite: Microsite) => {
-    setSelectedMicrosite(microsite);
+  setSelectedMicrosite(microsite);
   };
 
-  const handleCloseModal = () => {
-    setSelectedMicrosite(null);
-  };
+ const handleCloseModal = () => {
+  setSelectedMicrosite(null);
+ };
 
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
+ const handlePageChange = (page: number) => {
+  setCurrentPage(page);
+ };
 
-  const handleFilterChange = (newFilter: 'pendiente' | 'rechazado' | 'aprobado' | 'todos') => {
-    setFilter(newFilter);
-    setCurrentPage(1); // Resetear la página actual al cambiar el filtro
-  };
+ const handleFilterChange = (newFilter: 'PENDIENTE' | 'RECHAZADO' | 'APROBADO' | 'EN_PROCESO' | 'TODOS') => {
+  setFilter(newFilter);
+  setCurrentPage(1); // Resetear la página actual al cambiar el filtro
+ };
 
-  const getStatusColor = (status: Microsite['status']): string => {
-    switch (status) {
-      case 'pendiente':
-        return 'text-yellow-500';
-      case 'rechazado':
-        return 'text-red-500';
-      case 'aprobado':
-        return 'text-green-500';
-      default:
-        return '';
-    }
-  };
+ const getStatusColor = (status: Microsite['status']): string => {
+  switch (status) {
+    case 'PENDIENTE':
+      return 'text-yellow-500';
+    case 'RECHAZADO':
+      return 'text-red-500';
+    case 'APROBADO':
+      return 'text-green-500';
+      case 'EN_PROCESO':
+        return 'text-blue-500';
+    default:
+      return '';
+  }
+ };
 
-  const filteredMicrosites =
-    filter === 'todos' ? microsites : microsites.filter((m) => m.status === filter);
-  const paginatedMicrosites = filteredMicrosites.slice(
-    (currentPage - 1) * ITEMS_PER_PAGE,
-    currentPage * ITEMS_PER_PAGE
-  );
-
+ const filteredMicrosites = useMemo(() => filter === 'TODOS' ? microsites : microsites.filter((m) => m.status === filter), [microsites, filter]);
+ const paginatedMicrosites = useMemo(() => filteredMicrosites.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE), [filteredMicrosites, currentPage]);
+ 
   return (
-    <div className="max-w-full mx-auto bg-white p-8 rounded-md shadow-md">
+    <div className="w-full bg-[#f0f0f0] pt-8 pr-16 pl-16 pb-8 mt-4 mr-16 ml-16 mb-4 rounded-md shadow-md">
       <h1 className="text-3xl font-semibold mb-4 text-gray-800">Micrositios</h1>
-
       {/* Selector de filtro */}
       <div className="mb-4">
         <label htmlFor="filter" className="mr-2 font-semibold text-gray-800">
@@ -93,14 +116,15 @@ const ApprovalPanel: React.FC = () => {
           id="filter"
           value={filter}
           onChange={(e) =>
-            handleFilterChange(e.target.value as 'pendiente' | 'rechazado' | 'aprobado' | 'todos')
+            handleFilterChange(e.target.value as 'PENDIENTE' | 'RECHAZADO' | 'APROBADO' | 'EN_PROCESO' | 'TODOS')
           }
           className="p-2 border rounded-md"
         >
-          <option value="todos">Todos</option>
-          <option value="pendiente">Pendiente</option>
-          <option value="rechazado">Rechazado</option>
-          <option value="aprobado">Aprobado</option>
+          <option value="TODOS">Todos</option>
+          <option value="PENDIENTE">Pendiente</option>
+          <option value="RECHAZADO">Rechazado</option>
+          <option value="APROBADO">Aprobado</option>
+          <option value="EN_PROCESO">En proceso</option>
         </select>
       </div>
 
@@ -109,28 +133,28 @@ const ApprovalPanel: React.FC = () => {
         {paginatedMicrosites.map((microsite) => (
           <li
             key={microsite.id}
-            className="mb-4 p-4 bg-white bg-opacity-80 rounded transition transform hover:scale-105"
+            className="mb-4 p-4 bg-white bg-opacity-80 rounded transition transform hover:scale-105 border-b border-[#08403E]"
           >
             <div className="flex justify-between items-center border-b pb-2">
-              <span className="font-semibold text-gray-800">{microsite.name}</span>
-              <div className="flex space-x-2">
+              <span className="font-semibold text-gray-800">{microsite.microSiteName}</span>
+              <div className="flex space-x-2 items-center">
                 <span className={`text-sm font-semibold ${getStatusColor(microsite.status)}`}>
                   Estado: {microsite.status.charAt(0).toUpperCase() + microsite.status.slice(1)}
                 </span>
                 <div className="flex space-x-2">
-                  {(microsite.status === 'pendiente' || microsite.status === 'rechazado') && (
+                  {(microsite.status === 'PENDIENTE' || microsite.status === 'RECHAZADO' || microsite.status === 'EN_PROCESO') && (
                     <>
                       <button
-                        onClick={() => handleApprove(microsite)}
+                        onClick={() => handleStatusChange(microsite, 'APROBADO')}
                         className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 transition duration-300"
                       >
                         Aprobar
                       </button>
                     </>
                   )}
-                  {(microsite.status === 'pendiente' || microsite.status === 'rechazado') && (
+                  {(microsite.status === 'PENDIENTE' || microsite.status === 'EN_PROCESO' || microsite.status === 'APROBADO') && (
                     <button
-                      onClick={() => handleReject(microsite)}
+                      onClick={() => handleStatusChange(microsite, 'RECHAZADO')}
                       className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition duration-300"
                     >
                       Rechazar
@@ -146,7 +170,7 @@ const ApprovalPanel: React.FC = () => {
               </div>
             </div>
             <div className="mt-2 text-sm text-gray-600">
-              Creado por {microsite.creator} el {microsite.date}
+              Creado por {microsite.userName} {microsite.userLastName} el {microsite.ventureName}
             </div>
           </li>
         ))}
@@ -177,27 +201,26 @@ const ApprovalPanel: React.FC = () => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <div className="bg-white p-6 rounded-md shadow-md max-w-md">
             <h2 className="text-xl font-semibold mb-4 text-gray-800">
-              {selectedMicrosite.name} Detalles
+              {selectedMicrosite.comment} Detalles
             </h2>
             <p className={`text-gray-800 mb-2 ${getStatusColor(selectedMicrosite.status)}`}>
               Estado Actual: {selectedMicrosite.status}
             </p>
-            <p>Nombre del Usuario: {selectedMicrosite.creator}</p>
-            <p>Fecha de Creación: {selectedMicrosite.date}</p>
+            <p>Nombre del Usuario: {selectedMicrosite.userName} {selectedMicrosite.userLastName}</p>
             <div className="flex space-x-2 mt-4">
-              {(selectedMicrosite.status === 'pendiente' || selectedMicrosite.status === 'rechazado') && (
+              {(selectedMicrosite.status === 'PENDIENTE' || selectedMicrosite.status === 'RECHAZADO' || selectedMicrosite.status === 'EN_PROCESO') && (
                 <>
                   <button
-                    onClick={() => handleApprove(selectedMicrosite)}
+                    onClick={() => handleStatusChange(selectedMicrosite, 'APROBADO')}
                     className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 transition duration-300"
                   >
                     Aprobar
                   </button>
                 </>
               )}
-              {(selectedMicrosite.status === 'pendiente' || selectedMicrosite.status === 'rechazado') && (
+              {(selectedMicrosite.status === 'PENDIENTE' || selectedMicrosite.status === 'EN_PROCESO' || selectedMicrosite.status === 'APROBADO') && (
                 <button
-                  onClick={() => handleReject(selectedMicrosite)}
+                  onClick={() => handleStatusChange(selectedMicrosite, 'RECHAZADO')}
                   className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition duration-300"
                 >
                   Rechazar
@@ -216,5 +239,4 @@ const ApprovalPanel: React.FC = () => {
     </div>
   );
 };
-
 export default ApprovalPanel;
