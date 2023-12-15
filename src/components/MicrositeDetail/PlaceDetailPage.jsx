@@ -4,6 +4,7 @@ import ServiceList from './ServiceList';
 import RelatedPlacesCarousel from './RelatedPlacesCarousel';
 import ReviewsSection from './Review/ReviewsSection';
 import MicrositioSection from './MicrositioSection';
+import './../Styles/Register.css';
 
 const PlaceDetailPage = () => {
 
@@ -16,9 +17,10 @@ const PlaceDetailPage = () => {
     { id: 4, nombre: 'Producto 1' },
     { id: 5, nombre: 'Producto 2' },
     { id: 6, nombre: 'Producto 3' },
-  ];
+  ];  
 
   return (
+    <div className='container-internal'>
     <div className="container mx-auto p-8 bg-gray-100">
       <div className="flex flex-wrap -mx-4">
 
@@ -52,6 +54,7 @@ const PlaceDetailPage = () => {
       <div className="mb-8">
         <ReviewsSection />
       </div>
+    </div>
     </div>
   );
 };

@@ -18,6 +18,7 @@ import ProtectedRoutes from './ProtectedRoutes/ProtectedRoutes.jsx'
 import EmailConfirmation from './components/pages/EmailConfirmation.jsx';
 import ResetPasswordComponent from './components/pages/RecoverPassword.jsx';
 import EmailConfirmationRegister from './components/pages/EmailConfirmationRegister.jsx';
+import PlaceDetailPage from './components/MicrositeDetail/PlaceDetailPage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -42,7 +43,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/TouristRoutes",
-        element: <TouristRoutes/>
+        element: <TouristRoutes/>,
+      },
+      {
+        path: "/TouristRoutes/ViewTour",
+        element: <PlaceDetailPage/>
       },
       {
         path: "/EmailConfirmation",

@@ -105,7 +105,7 @@ export default function Login() {
               </form>
               <div className="form-group">
                 <div className="register-option">¿Aún no tienes una cuenta? 
-                  <a href="/Register" className="link"> Clic aquí</a>
+                  <a href="/signup" className="link"> Clic aquí</a>
                 </div>
               </div>
             </div>

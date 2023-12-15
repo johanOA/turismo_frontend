@@ -1,11 +1,15 @@
 import { useState } from 'react';
 import './../Styles/PagesTailwinds.css';
+import { useNavigate } from 'react-router-dom';
 
 export default function TouristRoutes() {
     const [searchTerm, setSearchTerm] = useState('');
     const [sortOption, setSortOption] = useState('fecha');
     const [filterOption, setFilterOption] = useState('');
-
+    const navigate = useNavigate();
+    const handleNavigate = () => {
+        navigate('/TouristRoutes/ViewTour');
+    }       
     
     // Blogs predefinidos
     const blogPosts = [
@@ -36,7 +40,6 @@ export default function TouristRoutes() {
             category: "Tips de Viaje",
             categoryColor: "bg-red-200 text-red-800"
         },
-        // ... más blogs
     ];
 
     // Función para convertir string de fecha a objeto Date
@@ -95,7 +98,7 @@ export default function TouristRoutes() {
                 </div>
             </div>
             <div className="w-full md:w-3/4">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" onClick={handleNavigate}>
                     {getFilteredAndSortedPosts().map((post, index) => (
                         <div key={index} className="bg-white rounded-lg shadow-lg p-6">
                             <img className="w-full h-48 object-cover rounded-lg mb-4" src={post.imageUrl} alt={`Blog ${post.title}`} />
