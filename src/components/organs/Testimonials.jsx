@@ -1,9 +1,11 @@
-import { useCallback, useRef } from "react";
+import { useCallback, useRef,useState } from "react";
 import { Text } from "../atoms/Text"
 import { TestimonialTexts } from "../particles/DataLists"
-import Slider from "react-slick";
-import { Button } from "../atoms/Button";
-import { CaretDown, CaretUp } from "@phosphor-icons/react";
+import { ArrowCircleRight } from "@phosphor-icons/react";
+import { ArrowCircleLeft } from "@phosphor-icons/react";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from 'react-responsive-carousel';
+import Colors from '../../constants/Colors';
 import { Card } from "../molecules/Card";
 import ProfileImg1 from "../../assets/profile1.jpeg"
 import ProfileImg2 from "../../assets/profile2.jpeg"
@@ -11,20 +13,7 @@ import ProfileImg3 from "../../assets/profile3.jpeg"
 import ProfileImg4 from "../../assets/profile4.jpeg"
 
 const Testimonials = () => {
-    const sliderRef = useRef<Slider | null>();
-
-    // Function for next button
-    const next = () => {
-        if (sliderRef.current) {
-            sliderRef.current.slickNext();
-        }
-    };
-    // function for previous button
-    const previous = () => {
-        if (sliderRef.current) {
-            sliderRef.current.slickPrev();
-        }
-    };
+    const [currentIndex, setCurrentIndex] = useState(0);
 
     // Slider settings
     const settings = {
@@ -37,7 +26,7 @@ const Testimonials = () => {
 
     };
 
-    const renderProfileImg = useCallback((element: number) => {
+    const renderProfileImg = useCallback((element) => {
         switch (element) {
             case 0:
                 return ProfileImg2;
@@ -64,12 +53,65 @@ const Testimonials = () => {
                         {TestimonialTexts.secondText}
                     </Text>
                 </div>
+
                 {/* Testimonial Slides Container  */}
                 <div className="w-full lg:h-[400px] flex justify-center gap-4 items-center">
+
+
+
                     <div className="lg:h-[250px] w-[90%]">
-                        <Slider ref={(slider) => (sliderRef.current = slider)} {...settings}>
-                            {
-                                TestimonialTexts.feedBacks.map((feedBack, index) => (
+                    <Carousel
+                            showStatus={false}
+                            showIndicators={true}
+                            infiniteLoop={true}
+                            centerMode
+                            centerSlidePercentage={100} // Adjust the percentage based on your needs
+                            selectedItem={currentIndex}
+                            onChange={(index) => setCurrentIndex(index)}
+
+                            renderArrowPrev={(onClickHandler, hasPrev, label) =>
+                                hasPrev && (
+                                <button
+                                    type="button"
+                                    onClick={onClickHandler}
+                                    title={label}
+                                    style={{
+                                    position: 'absolute',
+                                    top: '50%',
+                                    left: 0,
+                                    cursor: 'pointer',
+                                    zIndex: 2,
+                                    // Agrega más estilos según tus necesidades
+                                    }}
+                                >
+                                    <ArrowCircleLeft size={25} color={Colors.primarydark2} weight="fill" />
+
+                                </button>
+                                )
+                            }
+                            renderArrowNext={(onClickHandler, hasNext, label) =>
+                                hasNext && (
+                                <button
+                                    type="button"
+                                    onClick={onClickHandler}
+                                    title={label}
+                                    style={{
+                                    position: 'absolute',
+                                    top: '50%',
+                                    right: 0,
+                                    cursor: 'pointer',
+                                    zIndex: 2,
+                                    // Agrega más estilos según tus necesidades
+                                    }}
+                                >
+                                <ArrowCircleRight size={25} color={Colors.primarydark2} weight="fill" />
+
+                                </button>
+                                )
+                            }
+                            
+                    >    
+                    {TestimonialTexts.feedBacks.map((feedBack, index) => (
                                     <div className="w-full">
                                         <Card key={index} cardClass="bg-white shadow border-[1px] border-color3/10 relative rounded-xl p-4 lg:h-[200px] h-[260px] lg:mb-4 w-full flex gap-4 justify-start" imageAlt={feedBack.person} imageSrc={renderProfileImg(index)} imageWrapperClass="w-20 h-20 rounded-full absolute lg:bottom-4 bottom-3 right-4 overflow-hidden" cover="object-cover object-top" textWrapperClass="flex flex-col justify-center gap-6">
                                             <Text as="q" className="text-[0.84rem] font-light text-color3">
@@ -85,18 +127,8 @@ const Testimonials = () => {
                                             </div>
                                         </Card>
                                     </div>
-                                ))
-                            }
-                        </Slider>
-                    </div>
-                    {/* Controllers  */}
-                    <div className="flex flex-col gap-4 pb-5">
-                        <Button onClick={previous} id="prev" className="cursor-pointer outline-none border-none bg-color2/30 text-color3 hover:bg-color2 p-2 rounded-full" type="button">
-                            <CaretUp size={18} color="currentColor" weight="fill" />
-                        </Button>
-                        <Button onClick={next} id="next" className="cursor-pointer outline-none border-none bg-color2/30 text-color3 hover:bg-color2 p-2 rounded-full" type="button">
-                            <CaretDown size={18} color="currentColor" weight="fill" />
-                        </Button>
+                                ))}
+                    </Carousel>
                     </div>
                 </div>
             </main>
